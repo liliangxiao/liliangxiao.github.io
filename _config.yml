@@ -44,8 +44,8 @@ defaults:
       path: "_tutorials"
     values:
       layout: tutorial-post
-      editor: 莫烦
-      author: 莫烦
+      editor: 李良晓
+      author: 李良晓
       author-link: "#"
       enable_ads: true
       published: true  #TOD: change back to true
@@ -67,6 +67,10 @@ defaults:
       path: "_loop-description/machine-learning"
     values:
       module: machine-learning
+  - scope:
+      path: "_loop-description/progress"
+    values:
+      module: progress
   - scope:
       path: "_loop-description/others"
     values:
@@ -247,3 +251,14 @@ defaults:
       keywords: 其他, git, VCS
       thumbnail: /static/img/course_cover/git.jpg
       published: true
+
+  - scope:
+      path: "_tutorials/progress/thoughts"
+    values:
+      series: Numpy & Pandas
+      tut-permalink: /tutorials/progress/thoughts
+      category: thoughts
+      keywords: numpy, pandas, 数据, 处理
+      thumbnail: /static/img/course_cover/np_pd.jpg
+
+

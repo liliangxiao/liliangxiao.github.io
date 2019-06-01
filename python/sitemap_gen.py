@@ -2,7 +2,7 @@
 import os
 import datetime
 
-os.chdir("/Users/MorvanZhou/Documents/python/morvanzhou.github.io")
+os.chdir("/home/ryder/myblog")
 
 
 lastmod = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).astimezone().isoformat()

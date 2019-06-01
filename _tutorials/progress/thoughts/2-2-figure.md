@@ -7,7 +7,7 @@ b_page: 4
 description: matplotlib 的 figure 就是一个 单独的 figure 小窗口, 小窗口里面还可以有更多的小图片. 我们用一个简单的例子来练习一下.
 author: 黄伟
 chapter: 2
-title: 测试3figure 图像
+title: figure 图像
 date: 2016-11-3
 post-headings:
   - 简单的线条

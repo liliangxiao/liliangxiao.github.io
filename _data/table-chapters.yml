@@ -144,3 +144,16 @@ tkinter:
     - 什么是 tkinter 窗口
     - tkinter 的窗口部件
     - 登录窗口例子
+
+thoughts:
+  chapter-names:
+    - Matplotlib 简介
+    - 基本使用
+    - 画图种类
+    - 多图合并显示
+    - 动画
+
+neural_netowrk:
+  chapter-names:
+    - 快速学习神经网络
+

@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{ page.description }}">
-  <meta name="keywords" content="莫烦,python,tutorial,machine learning,{{ page.keywords }}">
-  <meta name="author" content="Mofan, Morvan,莫烦,周沫凡,周莫烦,{{ page.author }}">
+  <meta name="keywords" content="Linux,Thoughts,MBD{ page.keywords }}">
+  <meta name="author" content="李良晓,Ryder Lee,{{ page.author }}">
   <meta name="thumbnail" content="{{site.url}}{{ page.thumbnail | replace_first: '/static/thumbnail-small', '/static/thumbnail'}}" />
-  <title>{% if page.title != "" %}{{page.title}}{% endif %}{% if page.series %} - {{page.series}}{% endif %}{% if page.series or page.title != "" %} | {% endif %}莫烦Python</title>
+  <title>{% if page.title != "" %}{{page.title}}{% endif %}{% if page.series %} - {{page.series}}{% endif %}{% if page.series or page.title != "" %} | {% endif %}李良晓说</title>
 
   <meta property="fb:app_id" content="2053270218284962"/>
-  <meta property="og:site_name" content="莫烦Python"/>
-  <meta property="og:title" content='{% if page.title != "" %}{{page.title}}{% endif %}{% if page.series %} - {{page.series}}{% endif %}{% if page.series or page.title != "" %} | {% endif %}莫烦Python' />
+  <meta property="og:site_name" content="李良晓说"/>
+  <meta property="og:title" content='{% if page.title != "" %}{{page.title}}{% endif %}{% if page.series %} - {{page.series}}{% endif %}{% if page.series or page.title != "" %} | {% endif %}李良晓说' />
   <meta property="og:description" content="{{ page.description }}"/>
   <meta property="og:image" content="{{site.url}}{{ page.thumbnail | replace_first: '/static/thumbnail-small', '/static/thumbnail'}}">
   <meta property="og:url" content="{{site.url}}{{page.url}}">
@@ -25,85 +25,6 @@
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="//pv.sohu.com/cityjson"></script>
   <script type="text/javascript" src="/js/video-select.js"></script>
-  <!--<script type="text/javascript">-->
-    <!--/* video-select.js */-->
-    <!--function videoChinaIP(src, src_name, vid) {-->
-
-      <!--if (window.XMLHttpRequest)-->
-      <!--{// code for IE7+, Firefox, Chrome, Opera, Safari-->
-          <!--var request = new XMLHttpRequest();-->
-      <!--}-->
-      <!--else-->
-      <!--{// code for IE6, IE5-->
-          <!--var request = new ActiveXObject("Microsoft.XMLHTTP");-->
-      <!--}-->
-      <!--request.open('GET', '//ip-api.com/xml');-->
-      <!--request.onreadystatechange = function() {-->
-        <!--if (request.readyState == 4 && request.status == 200) {-->
-          <!--var xmlDoc = request.responseXML;-->
-          <!--var root = xmlDoc.documentElement;-->
-          <!--var element = root.getElementsByTagName("countryCode");-->
-          <!--var country = element[0].firstChild.nodeValue;-->
-          <!--if (country == "CN"){-->
-            <!--chooseVideo(src, src_name, vid);-->
-            <!--alert('china');-->
-          <!--}-->
-          <!--else {-->
-           <!--alert('others')}-->
-
-        <!--}-->
-      <!--}-->
-      <!--request.send(null);-->
-    <!--}-->
-
-    <!--function chooseVideo(src, src_name, vid){-->
-      <!--var velem = document.getElementById('videogfw');-->
-      <!--var vai = document.getElementById("video-alrt-info");-->
-      <!--if (src_name == "bilibili") {-->
-        <!--if (vid.includes("&page=")) {-->
-            <!--var words = vid.split("&page=");-->
-            <!--var vid = words[0] +"/?p=" + words[1];-->
-        <!--}-->
-        <!--if (vai) {-->
-            <!--vai.style.display = "block";-->
-            <!--vai.innerHTML = '(Bilibili 无法播放? 请 <a href="https://www.bilibili.com/video/av' + vid +'" target="_blank" >点击这里</a> 跳转至B站内)';-->
-        <!--}-->
-        <!--if (src.includes("hdslb")) {-->
-          <!--velem.style.paddingBottom = "70%";-->
-        <!--}-->
-        <!--else if (src.includes("bilibili")) {-->
-          <!--velem.style.paddingBottom = "72.5%";-->
-        <!--}-->
-      <!--}-->
-      <!--else if (src_name == "youku") {-->
-        <!--velem.style.paddingBottom = "56.25%";-->
-        <!--velem.style.lineHeight = "0";-->
-        <!--velem.style.fontSize = "0";-->
-        <!--var aid = src.split("embed/")[1];-->
-        <!--if (vai) {-->
-          <!--vai.style.display = "block";-->
-          <!--vai.innerHTML = '(优酷无法播放? 请 <a href="http://v.youku.com/v_show/id_' + vid +'==.html" target="_blank" >点击这里</a> 跳转至优酷站内)';-->
-        <!--}-->
-      <!--}-->
-      <!--else {-->
-        <!--velem.style.paddingBottom = "56.25%";-->
-        <!--velem.style.lineHeight = "0";-->
-        <!--velem.style.fontSize = "0";-->
-        <!--if (vai) { vai.style.display = "none"; }-->
-      <!--}-->
-      <!--if (src.includes("swf") && (!FlashDetect.installed)){-->
-        <!--$("#myVideo").remove();-->
-        <!--velem.style.paddingBottom = "0";-->
-        <!--velem.style.lineHeight = "90px";-->
-        <!--velem.style.textAlign = "center";-->
-        <!--velem.style.fontSize = "2.5em";-->
-        <!--velem.innerHTML = "您的浏览器不支持 Flash 播放器, 请前往<a href='https://www.bilibili.com/video/av" + vid +"' target='_blank'>B站内</a>观看或切换视频源";-->
-      <!--}-->
-      <!--else {-->
-        <!--var video = '<iframe id="myVideo" class="myvideo" width="560" height=315 src=' + src + ' frameborder="0" allowfullscreen></iframe>';-->
-        <!--$("#myVideo").remove();-->
-        <!--$("#videogfw").append(video);}}-->
-  <!--</script>-->
   <script type="text/javascript">
     /* check-flash.js */
     var FlashDetect=new function(){var self=this;self.installed=false;self.raw="";self.major=-1;self.minor=-1;self.revision=-1;self.revisionStr="";var activeXDetectRules=[{"name":"ShockwaveFlash.ShockwaveFlash.7","version":function(obj){return getActiveXVersion(obj);}},{"name":"ShockwaveFlash.ShockwaveFlash.6","version":function(obj){var version="6,0,21";try{obj.AllowScriptAccess="always";version=getActiveXVersion(obj);}catch(err){}
@@ -113,10 +34,6 @@
   </script>
 
   <script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-
-  <!-- mathjax supported -->
-  <!--<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>-->
 
 
   {% if layout.structured-type == "BlogPosting" %}
@@ -140,7 +57,7 @@
     "dateModified": "{% if page.publish-date %}{{ page.publish-date }}{% else %} 2016-11-11 {% endif %}",
     "publisher": {
     "@type": "Organization",
-      "name":"莫烦Python",
+      "name":"李良晓说",
       "logo": {
         "@type": "ImageObject",
         "url": "{{ site.url }}/static/img/description/tab_icon.png",
@@ -158,7 +75,7 @@
       "description": "{{ page.description }}",
       "provider": {
         "@type": "Organization",
-        "name": "莫烦Python"
+        "name": "李良晓说"
       }
     }
   </script>

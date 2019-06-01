@@ -159,7 +159,7 @@ def get_playlist(yt_url, yk_url):
 def assign_all_id(category_path, write=True):
     import os
     import pandas as pd
-    os.chdir("/Users/MorvanZhou/Documents/python/morvanzhou.github.io")
+    os.chdir("/home/ryder/myblog")
     path = "./python/results/%s.csv" % PL_NAME
     pl_info = pd.read_csv(path)
     biids = pl_info["bi_vid"]
@@ -185,7 +185,7 @@ def assign_all_id(category_path, write=True):
 def replace_id(category_path, player, write=True):
     import os
     import pandas as pd
-    os.chdir("/Users/MorvanZhou/Documents/python/morvanzhou.github.io")
+    os.chdir("/home/ryder/myblog")
     path = "./python/results/%s.csv" % PL_NAME
     pl_info = pd.read_csv(path)
 
@@ -221,7 +221,7 @@ def replace_id(category_path, player, write=True):
 def new_bi_id(category_path, write=True):
     import os
     import pandas as pd
-    os.chdir("/Users/MorvanZhou/Documents/python/morvanzhou.github.io")
+    os.chdir("/home/ryder/myblog")
     path = "./python/results/%s.csv" % PL_NAME
     pl_info = pd.read_csv(path)
 
@@ -331,7 +331,11 @@ pl_dict = {
         "yk": "http://list.youku.com/albumlist/show/id_27399497",
         "bi": "http://www.bilibili.com/video/av16944429/",
     },
-
+    "thoughts": {
+        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKaHtKLn-jat8SOGndS3MEt",
+        "yk": "http://list.youku.com/albumlist/show/id_27399497",
+        "bi": "http://www.bilibili.com/video/av52609663/",
+    },
 
 
 }

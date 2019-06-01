@@ -1,7 +1,7 @@
 import os
 import re
 
-os.chdir("/Users/MorvanZhou/Documents/python/morvanzhou.github.io")
+os.chdir("/home/ryder/myblog")
 source = './_tutorials'
 
 # if find_pattern is None, design the match in below
