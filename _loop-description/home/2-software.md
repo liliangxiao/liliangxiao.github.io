@@ -1,10 +1,10 @@
 ---
 title: 软件
-icon-dir: /static/img/icon/data_icon.png
+icon-dir: /static/img/icon/software_icon.png
 tut-dir: /tutorials/software/
 description: "这里汇集成长的内容"
 tut-course-detail:
-  - ["/tutorials/software/linux", "Linux", "/static/img/course_cover-small/np_pd.jpg"]
+  - ["/tutorials/software/linux", "Linux", "/static/img/course_cover-small/linux.gif"]
 ---
 
 

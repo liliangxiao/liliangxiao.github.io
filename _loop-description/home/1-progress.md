@@ -1,10 +1,10 @@
 ---
 title: 成长
-icon-dir: /static/img/icon/data_icon.png
+icon-dir: /static/img/icon/grow_icon.jpg
 tut-dir: /tutorials/progress/
 description: "这里汇集成长的内容"
 tut-course-detail:
-  - ["/tutorials/progress/thoughts", "Thoughts 思想", "/static/img/course_cover-small/np_pd.jpg"]
+  - ["/tutorials/progress/thoughts", "Thoughts 思想", "/static/img/course_cover-small/thoughts.gif"]
 ---
 
 

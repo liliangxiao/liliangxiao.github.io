@@ -1,10 +1,10 @@
 thoughts:
   chapter-names:
-    - Matplotlib 简介
-    - 基本使用
-    - 画图种类
-    - 多图合并显示
-    - 动画
+    - 思想分享
+
+life:
+  chapter-names:
+    - 经验分享
 
 linux:
   chapter-names:

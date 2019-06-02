@@ -83,7 +83,16 @@ defaults:
       tut-permalink: /tutorials/progress/thoughts
       category: thoughts
       keywords: 自律, 思想, 进步, 减肥
-      thumbnail: /static/img/course_cover/np_pd.jpg
+      thumbnail: /static/img/course_cover/thoughts.jpg
+
+  - scope:
+      path: "_tutorials/progress/life"
+    values:
+      series: 美好生活
+      tut-permalink: /tutorials/progress/life
+      category: thoughts
+      keywords: 自律, 思想, 进步, 减肥
+      thumbnail: /static/img/course_cover/life.jpeg
 
   - scope:
       path: "_tutorials/software/linux"
