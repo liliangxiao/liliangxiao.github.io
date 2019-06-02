@@ -101,7 +101,7 @@ defaults:
       tut-permalink: /tutorials/software/linux
       category: linux
       keywords: linux
-      thumbnail: /static/img/course_cover/np_pd.jpg
+      thumbnail: /static/img/course_cover/linux.jpg
 
   - scope:
       path: "_tutorials/machine-learning/neuralnetwork"
@@ -110,5 +110,5 @@ defaults:
       tut-permalink: /tutorials/machine-learning/neuralnetwork/
       category: neuralnetwork
       keywords: 机器学习, 神经网络, 深度学习
-      thumbnail: /static/img/course_cover/ML_intro.png
+      thumbnail: /static/img/course_cover/neuralnetwork.png
 

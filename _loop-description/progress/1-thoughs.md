@@ -1,8 +1,7 @@
 ---
-title: Numpy & Pandas
-icon-dir: /static/img/icon/np_pd_icon.png
+title: 积极的思想
+icon-dir: /static/img/icon/thoughts.jpg
 tut-dir: /tutorials/progress/thoughts/
 ---
 Thoughts 的说明
-<a href="{{ page.tut-dir }}">Numpy & Pandas 视频教程</a> 包含的内容:
-Numpy 的一般使用; Pandas 的一般使用; 数据可视化等.
+<a href="{{ page.tut-dir }}">积极的思想</a> 教你如何塑造自己的思想、灵魂，快乐、安心的生活。

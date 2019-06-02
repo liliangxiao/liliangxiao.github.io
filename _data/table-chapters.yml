@@ -11,7 +11,7 @@ linux:
     - 内核技术
 
 
-neural_netowrk:
+neuralnetwork:
   chapter-names:
     - 神经网络入门
 
