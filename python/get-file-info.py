@@ -2,7 +2,7 @@ import os
 import re
 import numpy as np
 
-os.chdir("/Users/MorvanZhou/Documents/python/morvanzhou.github.io")
+os.chdir("/home/ryder/myblog")
 
 CATEGORY = 'linux-basic'
 SUP_CATEGORY = 'others'

@@ -1,7 +1,7 @@
 from PIL import Image
 import os
 
-os.chdir("/Users/MorvanZhou/Documents/python/morvanzhou.github.io")
+os.chdir("/home/ryder/myblog")
 
 
 def change_size(job_name='thumbnails'):

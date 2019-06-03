@@ -15,7 +15,7 @@ sm = ["""<?xml version="1.0" encoding="UTF-8"?>
         """,
         """
 <url>
-    <loc>https://morvanzhou.github.io/</loc>
+    <loc>https://liliangxiao.github.io/</loc>
     <lastmod>{0}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -39,7 +39,7 @@ for root, dirs, files in os.walk("./_site"):
 
                 sm_temp = """
 <url>
-    <loc>https://morvanzhou.github.io/{0}</loc>
+    <loc>https://liliangxiao.github.io/{0}</loc>
     <lastmod>{1}</lastmod>
     <changefreq>daily</changefreq>
     <priority>{2}</priority>
