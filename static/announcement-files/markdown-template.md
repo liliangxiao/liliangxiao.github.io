@@ -32,5 +32,5 @@ print("这是代码块")
 
 ## 主题 4
 
-如果需要插入链接, 比如 [莫烦python](https://morvanzhou.github.io/)
+如果需要插入链接, 比如 [良晓课堂](https://liliangxiao.github.io/)
 

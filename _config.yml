@@ -90,17 +90,17 @@ defaults:
     values:
       series: 美好生活
       tut-permalink: /tutorials/progress/life
-      category: thoughts
+      category: life
       keywords: 自律, 思想, 进步, 减肥
       thumbnail: /static/img/course_cover/life.jpeg
 
   - scope:
       path: "_tutorials/software/linux"
     values:
-      series: linux
+      series: linux教程
       tut-permalink: /tutorials/software/linux
       category: linux
-      keywords: linux
+      keywords: linux, kernel
       thumbnail: /static/img/course_cover/linux.jpg
 
   - scope:

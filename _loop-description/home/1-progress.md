@@ -5,7 +5,7 @@ tut-dir: /tutorials/progress/
 description: "这里汇集成长的内容"
 tut-course-detail:
   - ["/tutorials/progress/thoughts", "积极的思想", "/static/img/course_cover-small/thoughts.gif"]
-  - ["/tutorials/progress/life", "美好的生活", "/static/img/course_cover-small/life.jpeg"]    
+  - ["/tutorials/progress/life", "美好的生活", "/static/img/course_cover-small/life.jpeg"]
 ---
 
 
