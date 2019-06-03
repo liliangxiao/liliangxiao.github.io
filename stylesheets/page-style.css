@@ -1,14 +1,14 @@
 :root {
-  --c-n-mofan: #44a371;/*#3d9667;*/
+  --c-n-ryder: #44a371;/*#3d9667;*/
   --c-n: #4cb07b;
   --c-donation: var(--c-n);
-  --c-donation-hover: var(--c-n-mofan);
+  --c-donation-hover: var(--c-n-ryder);
   --c-about-table: #d8d8d8;
   --c-green-no-hover: #191818;
   --c-green-hover: #f2f2f2;
   --c-p: #415849;
   --c-tut-table: var(--c-n);
-  --c-tut-table-hover: var(--c-n-mofan);
+  --c-tut-table-hover: var(--c-n-ryder);
 }
 
 
@@ -215,7 +215,7 @@ line-height:1.5em;
 }
 
 #home-nav > ul > li:first-child > a {
-background-color: var(--c-n-mofan);
+background-color: var(--c-n-ryder);
 background-color: #44a371;
 filter: none !important;
 }
@@ -269,7 +269,7 @@ width: 100%;
 }
 
 #home-nav > ul > li > ul > li:hover {
-background-color: var(--c-n-mofan);
+background-color: var(--c-n-ryder);
 background-color: #44a371;
 filter: none !important;
 }
@@ -296,7 +296,7 @@ padding: 0.2em 0 0.2em 1em;
 }
 
 #home-nav a:hover {
-background-color: var(--c-n-mofan);
+background-color: var(--c-n-ryder);
 background-color: #44a371;
 color: var(--c-green-hover);
 color:#f2f2f2;
@@ -832,7 +832,7 @@ font-size: 1em;
 .PageNavigation a:hover {
 color: var(--c-green-hover);
 color:white;
-background-color: var(--c-n-mofan);
+background-color: var(--c-n-ryder);
 background-color: #44a371;
 }
 

@@ -7,11 +7,11 @@
   <meta name="keywords" content="Linux,Thoughts,MBD{ page.keywords }}">
   <meta name="author" content="李良晓,Ryder Lee,{{ page.author }}">
   <meta name="thumbnail" content="{{site.url}}{{ page.thumbnail | replace_first: '/static/thumbnail-small', '/static/thumbnail'}}" />
-  <title>{% if page.title != "" %}{{page.title}}{% endif %}{% if page.series %} - {{page.series}}{% endif %}{% if page.series or page.title != "" %} | {% endif %}李良晓说</title>
+  <title>{% if page.title != "" %}{{page.title}}{% endif %}{% if page.series %} - {{page.series}}{% endif %}{% if page.series or page.title != "" %} | {% endif %}良晓课堂</title>
 
   <meta property="fb:app_id" content="2053270218284962"/>
-  <meta property="og:site_name" content="李良晓说"/>
-  <meta property="og:title" content='{% if page.title != "" %}{{page.title}}{% endif %}{% if page.series %} - {{page.series}}{% endif %}{% if page.series or page.title != "" %} | {% endif %}李良晓说' />
+  <meta property="og:site_name" content="良晓课堂"/>
+  <meta property="og:title" content='{% if page.title != "" %}{{page.title}}{% endif %}{% if page.series %} - {{page.series}}{% endif %}{% if page.series or page.title != "" %} | {% endif %}良晓课堂' />
   <meta property="og:description" content="{{ page.description }}"/>
   <meta property="og:image" content="{{site.url}}{{ page.thumbnail | replace_first: '/static/thumbnail-small', '/static/thumbnail'}}">
   <meta property="og:url" content="{{site.url}}{{page.url}}">
@@ -44,10 +44,10 @@
     "@type": "BlogPosting",
     "@id": "{{ site.url }}{{ page.url }}",
     "headline": "{{ page.title }}",
-    "image": "{{ site.url }}{% if page.thumbnail %}{{ page.thumbnail }}{% else %}/static/img/description/mofanpython.png{% endif %}",
+    "image": "{{ site.url }}{% if page.thumbnail %}{{ page.thumbnail }}{% else %}/static/img/description/my_pic.jpg{% endif %}",
     "author": {
       "@type": "Person",
-      "name": "莫烦",
+      "name": "良晓",
       "email": "morvanzhou@hotmail.com"
     },
     "description": "{{ page.description }}",
@@ -57,7 +57,7 @@
     "dateModified": "{% if page.publish-date %}{{ page.publish-date }}{% else %} 2016-11-11 {% endif %}",
     "publisher": {
     "@type": "Organization",
-      "name":"李良晓说",
+      "name":"良晓课堂",
       "logo": {
         "@type": "ImageObject",
         "url": "{{ site.url }}/static/img/description/tab_icon.png",
@@ -75,7 +75,7 @@
       "description": "{{ page.description }}",
       "provider": {
         "@type": "Organization",
-        "name": "李良晓说"
+        "name": "良晓课堂"
       }
     }
   </script>

@@ -89,9 +89,9 @@ def get_all_id(yt_url, yk_url, bi_url):
             title_yt = item_yt.get_text().strip()
             title_yk = item_yk['title'].strip()
 
-            title_yt = title_yt.replace("#", "").replace("-", ".").replace("莫烦", "")
-            title_yk = title_yk.replace("#", "").replace("-", ".").replace("莫烦", "")
-            title_bi = title_bi.replace("#", "").replace("-", ".").replace("莫烦", "")
+            title_yt = title_yt.replace("#", "").replace("-", ".").replace("良晓", "")
+            title_yk = title_yk.replace("#", "").replace("-", ".").replace("良晓", "")
+            title_bi = title_bi.replace("#", "").replace("-", ".").replace("良晓", "")
             if "cid" not in bi_url:
                 title_bi = re.findall(r"\d+、(.*)", title_bi)[0]
 
@@ -146,8 +146,8 @@ def get_playlist(yt_url, yk_url):
             title_yt = item_yt.get_text().strip()
             title_yk = item_yk['title'].strip()
 
-            title_yt = title_yt.replace("#", "").replace("-", ".").replace("莫烦", "")
-            title_yk = title_yk.replace("#", "").replace("-", ".").replace("莫烦", "")
+            title_yt = title_yt.replace("#", "").replace("-", ".").replace("良晓", "")
+            title_yk = title_yk.replace("#", "").replace("-", ".").replace("良晓", "")
 
             print(v_id_yt, title_yt, v_url_yt)
             print(v_id_yk, title_yk, v_url_yk)
