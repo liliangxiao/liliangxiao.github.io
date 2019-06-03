@@ -72,13 +72,13 @@ description: "我叫李良晓, 喜欢钻研技术，喜欢追求改变和感觉�
 		<div id="contact-table" style="font-size:0.9em;">
 			{% for item in page.items %}
 				<div class="row">
-				  <p style="color: #028e3d;">{{ item[1] }}:</p>
+				  <p style="color: #02338e;">{{ item[1] }}:</p>
 					{% if item[0] == "link" %}
 				    <a href="{{ item[2] }}" style="font-size:0.7em;" target="_blank">
 					    {{ item[2] }}
 				    </a>
 					{% elsif item[0] == "text" %}
-					  <span style="text-decoration:none; color:#00b359;" >
+					  <span style="text-decoration:none; color:#f56100;" >
 					    {{ item[2] }}
 				    </span>
 					{% endif %}

@@ -245,92 +245,12 @@ def new_bi_id(category_path, write=True):
 
 
 SHOW_TMP = False
-PL_NAME = "sklearn"
-CATEGORY_PATH = "./_tutorials/machine-learning/sklearn"
+PL_NAME = "selfdescipline"
+CATEGORY_PATH = "./_tutorials/progress/thoughts"
 WRITE_TO_FILE = False
 
 
 pl_dict = {
-    "np-pd": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKKyC45gatc8wEc3Ue7BlI4",
-        "yk": "http://list.youku.com/albumlist/show/id_27329155",
-        "bi": "https://www.bilibili.com/video/av16378934/",
-    },
-    "plt": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKiBRXYqNNCw8AUo6tYen3l",
-        "yk": "http://list.youku.com/albumlist/show/id_28097045",
-        "bi": "https://www.bilibili.com/video/av16378354/",
-    },
-    "keras": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKhCSIgTgIfjtG5y0Bf_TIY",
-        "yk": "http://list.youku.com/albumlist/show/id_28505797",
-        "bi": "https://www.bilibili.com/video/av16910214/",
-    },
-    "git": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKysjmSNln65YoUt9lwEl7-",
-        "yk": "http://list.youku.com/albumlist/show/id_28783332",
-        "bi": "https://www.bilibili.com/video/av16377923/",
-    },
-    "tensorflow": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKI5AIlf5TxxFPzb-0zeVZ8",
-        "yk": "http://list.youku.com/albumlist/show/id_27327189",
-        "bi": "http://www.bilibili.com/video/av16001891/",
-    },
-    "linux-basic": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cIiLTNZu-v3Y-xotBAjtH2x",
-        "yk": "http://list.youku.com/albumlist/show/id_51256056",
-        "bi": "https://www.bilibili.com/video/av15976434/",
-    },
-    "reinforcement-learning": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cJYKCSATwh1M4n8cUnUv6lT",
-        "yk": "http://list.youku.com/albumlist/show/id_29071613",
-        "bi": "http://www.bilibili.com/video/av16921335/",
-    },
-    "torch": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cJxT0mL0P3-G0rBcLSvVkKH",
-        "yk": "http://list.youku.com/albumlist/show/id_49718057",
-        "bi": "http://www.bilibili.com/video/av15997678/",
-    },
-    "EA": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cJyeE6BgkApUbAREpkoPDvG",
-        "yk": "http://list.youku.com/albumlist/show/id_50614305",
-        "bi": "https://www.bilibili.com/video/av16926245/",
-    },
-    "basic": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cIRP5gCi8AlYwQ1uFO2aQBw",
-        "yk": "http://list.youku.com/albumlist/show/id_27312381",
-        "bi": "https://www.bilibili.com/video/av16926522/",
-    },
-    "theano": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKpDID642AjNkygrSR5X15T",
-        "yk": "http://list.youku.com/albumlist/show/id_27743371",
-        "bi": "http://www.bilibili.com/video/av16938887/",
-    },
-    "ML-intro": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cIFm8Y8vMkNNPPXAtYXwKin",
-        "yk": "http://list.youku.com/albumlist/show/id_27892935",
-        "bi": "https://space.bilibili.com/243821484/#!/channel/detail?cid=26359",
-    },
-    "tkinter": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cJU56K4EtkG0YNGBZCuDwAH",
-        "yk": "http://list.youku.com/albumlist/show/id_27433146",
-        "bi": "http://www.bilibili.com/video/av16942112/",
-    },
-    "sklearn": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cI7ZleLM5i3XXhhe9YmVrRO",
-        "yk": "http://list.youku.com/albumlist/show/id_27469882.html?spm=a2h1n.8251843.0.0&&ascending=0",
-        "bi": "https://www.bilibili.com/video/av17003173/",
-    },
-    "multiprocessing": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cJgYDaJbwhg629-Il5cfkhe",
-        "yk": "http://list.youku.com/albumlist/show/id_27423283",
-        "bi": "http://www.bilibili.com/video/av16944405/",
-    },
-    "threading": {
-        "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKaHtKLn-jat8SOGndS3MEt",
-        "yk": "http://list.youku.com/albumlist/show/id_27399497",
-        "bi": "http://www.bilibili.com/video/av16944429/",
-    },
     "thoughts": {
         "yt": "https://www.youtube.com/playlist?list=PLXO45tsB95cKaHtKLn-jat8SOGndS3MEt",
         "yk": "http://list.youku.com/albumlist/show/id_27399497",
