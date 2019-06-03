@@ -5,7 +5,7 @@ b_av: 37283166
 b_cid: 
 b_page: 1
 description: "如何作到自律"
-chapter: 2
+chapter: 1
 thumbnail: "/static/thumbnail-small/thoughts/selfdespline.jpg"
 title: 如何作到自律
 date: 2019-6-1

@@ -3,7 +3,7 @@ youku_id:
 youtube_id: 
 b_av: 37050422
 b_cid: 
-b_page: 2
+b_page: 1
 description: 什么是成功。
 chapter: 1
 thumbnail: "/static/thumbnail-small/thoughts/success.jpg"
