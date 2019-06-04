@@ -4,7 +4,7 @@ icon-dir: /static/img/icon/software_icon.png
 tut-dir: /tutorials/software/
 description: "这里汇集成长的内容"
 tut-course-detail:
-  - ["/tutorials/software/linux", "Linux教程", "/static/img/course_cover-small/linux.gif"]
+  - ["/tutorials/software/linux", "Linux教程", "/static/img/course_cover-small/linux.jpg"]
 ---
 
 
