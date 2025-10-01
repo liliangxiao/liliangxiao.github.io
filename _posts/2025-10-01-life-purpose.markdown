@@ -7,7 +7,7 @@ img: # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [Life, Philosophy]
 ---
-# My Understanding of Life's Purpose
+# My Understanding of Life Purpose
 
 People suggest many different life purposes, such as being happy, loving others, learning, creating, following faith, or simply surviving.
 
