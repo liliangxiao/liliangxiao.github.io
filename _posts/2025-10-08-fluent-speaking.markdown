@@ -8,7 +8,6 @@ fig-caption: # Add figcaption (optional)
 tags: [Language, Progress]
 ---
 
-
 #### The Practical Method: How to Be Fluent
 
 The key to smooth talking is to use your Fast System and Fast Language. Here’s how:
@@ -24,7 +23,6 @@ The key to smooth talking is to use your Fast System and Fast Language. Here’s
     
 3. **Ignore the Noise.** A lot of information pushed to you (ads, distracting news) is not useful to you. It serves someone else's purpose. This information is noise. It clogs your mind and wastes energy. To focus and improve, you must block this noise out.
     
-
 #### The Training Exercise: The Keyword Game
 
 To become fluent, you need to practice connecting ideas quickly using simple language.
