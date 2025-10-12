@@ -64,6 +64,11 @@
   {% else %}
     <meta name="twitter:image:src" content="{{ site.url }}{{ site.baseurl }}/assets/img/{{ site.author-img }}">
   {% endif %}
+ 
+  <meta property='og:title' content="{{ page.description }}"/>
+  <meta property='og:image' content='"{{ site.url }}{{ site.baseurl }}/assets/img/{{ site.author-img }}"/>
+  <meta property='og:description' content="{{ page.description }}"/>
+  <meta property='og:url' content="{{ site.url }}{{ page.url }}"/>
 
 	<meta name="description" content="{{ page.description }}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
