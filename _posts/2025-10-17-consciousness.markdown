@@ -24,4 +24,4 @@ Based on this understanding:
 1. Since consciousness happens like sparks, we don't always have conciousness. 
 2. LLM can never have consiousness as it has no ego-focus.
 3. Ego-focus is a gradual process, and it grows and evolves.
-4. Emotion simulation can be implemented **though artificial neural network based emotions** which must be connected though neural network connection to main neural network and they need to cooperate to **do deep reinforcement learning** to generate Ego-Focus and thus artifical conciousness.
+4. Emotion simulation can be implemented **through artificial neural network based emotions** which must be connected though neural network connection to main neural network and they need to cooperate to **do deep reinforcement learning** to generate Ego-Focus and thus artifical conciousness.
