@@ -11,7 +11,9 @@ tags: [Life, Philosophy]
 
 People suggest many different life purposes, such as being happy, loving others, learning, creating, following faith, or simply surviving.
 
-To make sense of this, I use Maslow's Hierarchy of Needs as a reference. It shows that our needs are layered, from basic survival (food, safety) to higher goals (love, esteem, self-fulfillment).
+I belive life purpose should first be checked at gene's level **which is to survive and reproduce to continue at a better next generation and support their growth**.
+
+Based on gene's needs, we can then talk about needs to support it, which is the needs from another perspective. I will use Maslow's Hierarchy of Needs as a reference framwork, which shows that our needs are layered, from basic survival (food, safety) to higher goals (love, esteem, self-fulfillment), to illustrate my understanding of life purpose.
 
 ## The Logical Flow of My Thinking
 
@@ -29,13 +31,13 @@ My understanding follows a line of reasoning as below:
 4. **My Solution: The "Minimum Acceptable Level"**  
     Therefore, the key is not to endlessly seek more in every area. Instead, we should aim to satisfy each layer of needs only to its **minimum acceptable level**. This creates a stable base, allowing us to safely pursue the next level without the lower ones collapsing.
     
-5. **My Final Philosophy: Harmony Through Conscious Sacrifice**  
-    This leads to my ultimate view: true harmony among all needs is achieved through conscious balance. This means we must willingly "suffer" or restrain our lower needs (like comfort and material excess) to better fulfill our higher purposes (like growth and creativity).
+5. **My Final Philosophy: Harmony Through Conscious Sacrifice to get as higher as possible**  
+    This leads to my ultimate view: true harmony among all needs is achieved through conscious balance. This means we must willingly "suffer" or restrain our lower needs (like comfort and material excess) to better fulfill our higher purposes (like growth and self-fulfillment).
     
     **This is the way of the ascetic (苦行僧). It is not about rejection, but about smart management.**
     
 
-### A Modern Metaphor: Managing Your Inner Computer
+### A Modern Metaphor: Managing Your Inner Computer to run with higher capabilitiy
 
 Think of your mind and body as a powerful computer.
 
