@@ -7,66 +7,78 @@ img: # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags:  [Language]
 ---
-# The process of scene decoding and language encoding
+# The Process of Scene Decoding and Language Encoding
 ## Layers of Conceptual Abstraction
 
 **Language is an expression of ideas, and ideas originate from concepts in our brain.**
 
 ### The First Layer: Sensory Input
 
-This layer is the **initial input** from **image, sound, and touch**. It includes the main object and its dynamic features, such as a **red object** or a **mild sound**, something **soft**, or a **turning** motion.
+This layer is the **initial input** from **sight, sound, and touch**. It includes the main object and its dynamic features, such as a **red object**, a **mild sound**, something **soft**, or a **turning** motion.
 
 ### The Second Layer: Object Abstraction
 
-This layer involves the **abstraction of relations** among the senses related to a **specific object**. This layer is recursive. For example, a **cat** is an object that combines features like fur(need to trace deeper to the first layer), eyes(need to trace deeper to the first layer), a specific sound, size, and jumping action.  Giving the object a **name** abstracts these mixed sensory features. By naming it, the object's features are also summarized, as when we say a human **can speak**. 
+This layer involves the **abstraction of relations** among the senses related to a **specific object**. This layer is recursive. For example, a **cat** is an object that combines features like fur (which traces deeper to the first layer), eyes (which also trace deeper to the first layer), a specific sound, size, and jumping action. Giving the object a **name** abstracts these mixed sensory features. By naming it, the object's features are also summarized, as when we say a human **can speak**.
 
-The abstraction can have different vocabulary with different perspective.
+The abstraction can use different vocabulary based on perspective.
 
-A man: a human(comparing to animals), an animal(comparing to plants), a creature(comparing to rocks or dirt), a butcher(when connected with a knife and lots of meat), a father(when connected to a children), a husband(when connected with a women living together), a president(when connected with jobs), a victim(when connected with his loss.)
+* A **man**: a **human** (comparing to animals), an **animal** (comparing to plants), a **creature** (comparing to rocks or dirt), a **butcher** (when connected with a knife and lots of meat), a **father** (when connected to a child), a **husband** (when connected with a woman living together), a **president** (when connected with jobs), a **victim** (when connected with his loss).
 
 ### The Third Layer: Component Combination
 
 This layer adds **group concepts** from the second layer, creating complex entities like a **team, a company, or a country**. These entities have their own features; for instance, a company **can operate**.
 
-### The Fourth Layer: Naming apart of the third layer
+### The Fourth Layer: Naming a Part of the Third Layer
 
-This layer creates the name of a part of the third-layer language. This includes assigning a name to a **country, a specific illness, or a dish**.
+This layer creates the name for a part of the third-layer concept. This includes assigning a name to a **country, a specific illness, or a dish**.
 
-### Expression of concepts in different conceptual layers
+### Expressing Concepts Across Different Conceptual Layers
 We typically live within the **fourth layer's language environment**. Due to its vast vocabulary, we can only actively use a fraction of it.
 
 Fortunately, any **upper layer can be expressed with its lower layer**. For example, by grasping the first layer, we can describe components in the second layer. If we lack the concepts in an upper layer, we can't use its vocabulary effectively.
 
 When speaking **a second language**, we may **attempt to describe a concept established in our first language**. This is often when we get **stuck** because we lack the corresponding vocabulary. The most flexible solution is to **rely on the lower-layer concepts** to build the description, rather than struggling for a direct, one-to-one translation.
 
-Since most stuck happens for non-native speakers happens on the forth layer vocabulary, we can use the third layer to express to **increase fluency**. Such as: **Snorkel = breathing tube**, swimming mask = snorkel. Riding on a wheel = riding a unicycle.
+Since most times non-native speakers get stuck on the fourth-layer vocabulary, we can use the third layer to express the idea to **increase fluency**. For example: **Snorkel = breathing tube**, or we can describe a swimming mask as just that, or a **unicycle** as **riding on a wheel**.
 
-However, to improve the forth layer vocabulary, we need to consciously study the popular ones. By knowing this theory, we can consciously know which vocabulary is for the third layer and which is for the forth layer. If it's not a popular one in the forth layer, we don't need to bother to remember it as we may come across it only once in our life time.
-### Encoding/Decoding sequence of language with spacial  relations
-When describing a scene, we should give a general space relationship from more general structural to more detailed structural elements. This is to establish clear spacial relationships.
+However, to improve the fourth-layer vocabulary, we need to consciously study the popular ones. By knowing this theory, we can consciously know which vocabulary is for the third layer and which is for the fourth layer. If a word is not a popular one in the fourth layer, we don't need to bother remembering it, as we may come across it only once in our lifetime.
+
+### Encoding/Decoding Sequence of Language with Spatial Relations
+When describing a scene, we should give the spatial relationships from more general structures to more detailed structural elements. This helps to establish clear spatial relationships.
 
 Without structural information, language could be confusing as important information is lost.
-## Object Identification sequence
+
+## Object Identification Sequence
 
 ![]({{site.baseurl}}/assets/img/Pasted image 20251015134222.png){:width="30%"}
 
-As an example above, we see many objects at a time, the fist step to analyze it it through "**Object Abstraction**" at very fast speed (just a glimpse) with "Attention" on major elements into something giving key threads. At this step, the key is use **incremental** method to start with objects that connects the other elements most.
+As an example above, we see many objects at once. The first step to analyze this is through "**Object Abstraction**" at a very fast speed (just a glimpse) with "**Attention**" on major elements, leading to key themes. At this step, the key is to use an **incremental** method, starting with objects that connect most of the other elements.
+### Comprehension
+1.  The **dialog words** ("A strange question"): connect a **robot** $\rightarrow$ connect to a **woman** through "relative positions to a table."
+2.  **Three men**: connect to what's identified in step 1 through a "room window." "**Component Combination**" is done for: *in the room* and *outside of the room*.
+3.  **Timer, dinosaur**: connect to the question: time and question content.
 
-1. The dialog words(A strange question): connects a robot->connect to a woman though "relative positions to a table".
-2. Three men: connects to what's identified in 1 though "room window". "**Component Combination**" is done for: in the room and outside of the room.
-3. clock, dinosaur: connects to the question: time and question content.
+After the above three steps, key words(object abstraction) of the scene can be obtained:
+1.  A **robot** is asking a question to a **woman** sitting opposite him on the other side of a **table**.
+2.  The **question** is $\text{"}$, the answering **time** left for the woman is 45 seconds.
+3.  A **dinosaur** toy is placed on the table, indicating the **content** of the question.
+4.  Behind a glass window of the room, three **men** are watching.
 
-After the above three steps, key words of the scene can be obtained:
-1. A **robot** is is asking a question to a **woman** sitting opposite to him on the other side of a **table**.
-2. The **question** is "", the answering **time** left for the woman is 45 seconds. 
-3. A **dino** toy is placed onto the table, indicating the **content** of the question.
-4. behind a glass window of the room, three **men** are watching.
-
-Then we need to pay detailed informtion of the identified key objects:
+### Get into Details
+Then we need to pay attention to detailed information about the identified key objects:
 In the room:
-1. the robot: White body, black joints, blue eye giving lights, a palm extended  with an elbow rest on the table, the other hands poing at the dino toy.
-2. the women: holding a microphone, remembering
+1.  The **robot**: White body, black joints, blue eye giving off light, a palm extended with an elbow resting on the table, the other hand pointing at the dino toy.
+2.  The **woman**: holding a microphone, remembering/recalling.
 Outside the room:
-3. the testers； shocked, headphones, a cup.
+3.  The **testers**: shocked, wearing headphones, holding a cup.
 
-By combing the gerneral keywords and detailed info keywords, the decoding of a picuture and encoding into lanaguage are finished.
+## Language Encoding Sequence
+During the comprehension phase, we can identify keywords and their connections. The connections should be sort out before language encoding. The priciple is: **from near connection to far connections. For each connection, the details should be encoded after general description**. For example:
+
+In the scene, a robot on the left side is asking a question to a women sitting oposite to him across a table. (Connection 1 general description.)
+The robot is gernally glossy white whith eyes like blue lights and black joints. He has his left hand extended towards the woman and his right hand rested at the edge of the table. The woman has a headphone on her long black hair. She is holding big professional microphone with her right hand her left hand is resting on he table. She looks confused and seems trying to remember such an occasion.(Connection 1 details part 1.)
+
+The question, which was drawn as a diaglog box from the robot, is "Describe a time you faced a dragon". (Connection 1 details part 2.) Related to the question, a silicon dinosaur toy is placed on the table and a clock like digital timer is hung on the wall at the rear side of the scene. The timer says there are 45 seconds left.(Nearest branch connection)
+
+At the back, throught a glass window, three men with headphones on are wathcing them talking. (Connection 2(far connection) gernela description)
+The man on the left is holding his left hand towards his mouth, the man in the middle is sitting straight and the the man on the right holding a white cup of tea with his right hand. The all seem to be shocked.(Connection 2 details)
