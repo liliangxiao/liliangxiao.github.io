@@ -16,7 +16,7 @@ Consciousness is the correlational intelligence established between the internal
 Ego-focus is realized in human with a complex biological mechanism that generates emotions through prediction on seft-status via  low level intelligence mechanism. The emotions then drives the intelligence evolution through harming and rewarding. Ego-focus comes into being with emotions interacting with intelligence evolution and rewarding/harming change. This is a gradual process and if generated, it will stay. Normally a child will react neutrally to external incentive but when he has grown older, he has more bias to external incentives. This identifies that his ego-focus has evolved.
 
 ## Emotions
-Emotions routes from prediction of true harming and rewarding to the entity. So, it be simulated by setting up a mechanism to check harming and rewarding to the entity to guide its interaction with the environment. This is very like **Deep Reinforcement Learning**, but the mechanism is different. **It should not be a mathematic formula but should be based on 
+Emotions roots from prediction of true harming and rewarding to the entity. So, it be simulated by setting up a mechanism to check harming and rewarding to the entity to guide its interaction with the environment. This is very like **Deep Reinforcement Learning**, but the mechanism is different. **It should not be a mathematic formula but should be based on 
 artifical intelligece that can idenify harming and rewarding and also has evolving capabiltiy.**This rewarding AI should be merged with the main AI that they can interact as a whole through a neural network connection(not a mathematic connection)**.
 
 ## Conclusion
