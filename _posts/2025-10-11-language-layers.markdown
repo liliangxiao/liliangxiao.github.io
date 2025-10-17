@@ -45,12 +45,6 @@ Since non-native speakers most often get stuck on the **fourth-layer vocabulary*
 
 However, to improve the **fourth-layer vocabulary**, we need to consciously study the popular ones. By knowing this theory, we can consciously know which vocabulary is for the third layer and which is for the fourth layer. If a word is not a popular one in the fourth layer, we don't need to bother remembering it, as we may come across it only once in our lifetime.
 
-### Encoding/Decoding Sequence of Language with Spatial Relations
-
-When describing a scene, we should give the spatial relationships from more general structures to more detailed structural elements. This helps to establish clear spatial relationships.
-
-Without structural information, language could be confusing as important information is lost.
-
 ## Object Identification Sequence
 
 ![]({{site.baseurl}}/assets/img/Pasted image 20251015134222.png){:width="30%"}
