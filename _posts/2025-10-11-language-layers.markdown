@@ -19,9 +19,10 @@ This layer is the **initial input** from **image, sound, and touch**. It include
 ### The Second Layer: Object Abstraction
 
 This layer involves the **abstraction of relations** among the senses related to a **specific object**. This layer is recursive. For example, a **cat** is an object that combines features like fur(need to trace deeper to the first layer), eyes(need to trace deeper to the first layer), a specific sound, size, and jumping action.  Giving the object a **name** abstracts these mixed sensory features. By naming it, the object's features are also summarized, as when we say a human **can speak**. 
-#### Dimensions of an object
-For an object in a picture, it can have different vocabulary with different aspect.
-For example, from its shape, from its related concept,  for example: milk power: a cylinder, a tin, a container.  Snow: winter, cold, season. House: home, family, living place, warm place. An LCD display, a computer, studying.
+
+The abstraction can have different vocabulary with different perspective.
+
+A man: a human(comparing to animals), an animal(comparing to plants), a creature(comparing to rocks or dirt), a butcher(when connected with a knife and lots of meat), a father(when connected to a children), a husband(when connected with a women living together), a president(when connected with jobs), a victim(when connected with his loss.)
 
 ### The Third Layer: Component Combination
 
