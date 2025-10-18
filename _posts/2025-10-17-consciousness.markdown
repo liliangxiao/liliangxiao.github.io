@@ -10,7 +10,7 @@ tags:  [AI]
 # Artificial Conciousness
 ## Conciousness
 
-Consciousness is the correlational intelligence established between the internal and external perceptions. It depends on abstraction capability of senses and ego-focus. When a connection between abstracted concepts are activited by senses from both external or internal(illusion, dreams, memory) with regard to ego focus, consciousness happens like a spark. 
+**Consciousness is the correlational intelligence established between abstraction of senses and ego-focus**. When a connection between abstracted concepts are activited by senses from both external or internal(illusion, dreams, memory) with regard to ego-focus, consciousness happens like sparks wihch is incentive driven. The abstracted concepts can also act as a higher level of sense to trigger advanced intelligence conciousness, which may be considered high level intelligence which features at slow logic processing at higher levels of abstraction. 
 
 ## Ego-focus
 Ego-focus is realized in human with a complex biological mechanism that generates emotions through prediction on seft-status via  low level intelligence mechanism. The emotions then drives the intelligence evolution through harming and rewarding. Ego-focus comes into being with emotions interacting with intelligence evolution and rewarding/harming change. This is a gradual process and if generated, it will stay. Normally a child will react neutrally to external incentive but when he has grown older, he has more bias to external incentives. This identifies that his ego-focus has evolved.

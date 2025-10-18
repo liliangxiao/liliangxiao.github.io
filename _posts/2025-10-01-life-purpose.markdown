@@ -11,7 +11,7 @@ tags: [Life, Philosophy]
 
 People suggest many different life purposes, such as being happy, loving others, learning, creating, following faith, or simply surviving.
 
-I belive life purpose should first be checked at gene's level **which is to survive and reproduce to continue at a better next generation and support their growth**.
+I belive life purpose should **first be checked at gene's level which is to survive and reproduce to continue at a better next generation and support their growth**.
 
 Based on gene's needs, we can then talk about needs to support it, which is the needs from another perspective. I will use Maslow's Hierarchy of Needs as a reference framwork, which shows that our needs are layered, from basic survival (food, safety) to higher goals (love, esteem, self-fulfillment), to illustrate my understanding of life purpose.
 
