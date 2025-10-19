@@ -13,23 +13,29 @@ People suggest many different life purposes, such as being happy, loving others,
 
 I belive life purpose should **first be checked at gene's level which is to survive and reproduce to continue at a better next generation and support their growth**.
 
-Based on gene's needs, we can then talk about needs to support it, which is the needs from another perspective. I will use Maslow's Hierarchy of Needs as a reference framwork, which shows that our needs are layered, from basic survival (food, safety) to higher goals (love, esteem, self-fulfillment), to illustrate my understanding of life purpose.
+
+**Then it should be checked at group's level like a family, a religion, a race, a nation, all human kind, all mamals, all animals, all creatures, the earth, the solar system, the milky way and finnaly the universe.**
+
+
+Maslow's Hierarchy of Needs, which shows that our needs are layered, from basic survival (food, safety) to higher goals (love, esteem, self-fulfillment), doesn't have a sound foundataion, but it can be referenced as it also support the needs from gene's needs to group benefits' needs. My understanding of life purpose is based on the hiearchy of from gene to higher group's needs.
+
+The US emphasizes that personal interest is over group interest while China says that group interest is over personal interest. Their difference is toward the priority of the interest from different layers of individual's life purpose. I think this identifies that the hierachy of needs is dependent on people's understanding of purpose.
 
 ## The Logical Flow of My Thinking
 
 My understanding follows a line of reasoning as below:
 
 1. **Observation: Purpose Transforms the Hierarchy**  
-    A person's chosen life purpose dramatically reshapes their higher-level needs (like esteem and self-fulfillment). This is why we see such diversity in what people strive for.
+    A person's chosen life purpose dramatically reshapes their higher-level needs (interests in larger groups like esteem and self-fulfillment needs). This is why we see such diversity in what people strive for.
     
 2. **The Core Problem: Needs Are in Conflict**  
-    However, pursuing these higher goals often clashes with our lower, basic needs. Wanting to create art might conflict with the need for a stable income. This conflict is a primary source of human worry and confusion.
+    However, persuing these higher goals often clashes with our lower, basic needs. Wanting to create art might conflict with the need for a stable income. This conflict is a primary source of human worry and confusion.
     
 3. **A Common Trap: Excess Harms Growth**  
     Conversely, overindulging in basic needs (like eating too much for pleasure) can harm our ability to meet higher needs (like health and self-esteem).
     
 4. **My Solution: The "Minimum Acceptable Level"**  
-    Therefore, the key is not to endlessly seek more in every area. Instead, we should aim to satisfy each layer of needs only to its **minimum acceptable level**. This creates a stable base, allowing us to safely pursue the next level without the lower ones collapsing.
+    Therefore, the key is not to endlessly seek more in every level. Instead, we should aim to satisfy each layer of needs only to its **minimum acceptable level**. This creates a stable base, allowing us to safely pursue the next level without the lower ones collapsing.
     
 5. **My Final Philosophy: Harmony Through Conscious Sacrifice to get as higher as possible**  
     This leads to my ultimate view: true harmony among all needs is achieved through conscious balance. This means we must willingly "suffer" or restrain our lower needs (like comfort and material excess) to better fulfill our higher purposes (like growth and self-fulfillment).
