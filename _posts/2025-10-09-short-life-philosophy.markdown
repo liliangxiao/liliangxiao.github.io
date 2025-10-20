@@ -12,3 +12,5 @@ A small initial success, achieved through stronger determination and persistence
 一个小的需要决心和坚持的成功将同时触发其它方向的成功。
 
 A small step that breaks your plan, you will lost the power to achieve your target.
+
+Religion is a social operating system built on a core belief. It establishes behavioral protocols that ensure group cohesion, with its quality proven solely by its long-term robustness and evolutionary success.
