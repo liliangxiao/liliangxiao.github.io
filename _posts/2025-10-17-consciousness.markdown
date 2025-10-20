@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Artificial Conciousness
+title: Artificial Conciousness（A vague and genernal idea）
 date: 2025-10-17 09:32:20 +0400
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: # Add image post (optional)
@@ -8,6 +8,7 @@ fig-caption: # Add figcaption (optional)
 tags:  [AI]
 --- 
 # Artificial Conciousness
+What follows is a vague and general analysis, a personal framework for thinking about the monumental problem of artificial consciousness.
 ## Conciousness
 
 **Consciousness is the correlational intelligence established between abstraction of senses and ego-focus**. When a connection between abstracted concepts are activited by senses from both external or internal(illusion, dreams, memory) with regard to ego-focus, consciousness happens like sparks wihch is incentive driven. The abstracted concepts can also act as a higher level of sense to trigger advanced intelligence conciousness, which may be considered high level intelligence which features at slow logic processing at higher levels of abstraction. 
