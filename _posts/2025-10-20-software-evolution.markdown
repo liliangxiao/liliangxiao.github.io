@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The Inevitable March of Software: A History of Humanization
+title: The Inevitable March of Software- A History of Humanization
 date: 2025-10-20 09:32:20 +0400
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: # Add image post (optional)
