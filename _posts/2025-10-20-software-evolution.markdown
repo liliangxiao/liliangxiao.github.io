@@ -39,12 +39,14 @@ Let's trace this journey of humanization.
 
 ### The Pattern of Progress
 
-The history of software evolution reveals a clear pattern: each new language conquers the complexity of its predecessor by introducing a higher level of abstraction. We move from manipulating the machine's state, to expressing logic, to modeling complex domains, and finally to automatically enforcing correctness and safety.
+The history of software evolution reveals a clear pattern: **each new language conquers the complexity of its predecessor by introducing a higher level of abstraction**. We move from manipulating the machine's state, to expressing logic, to modeling complex domains, and finally to automatically enforcing correctness and safety.
 
-The destination is not a single "perfect" language, but an ever-expanding toolkit that allows us to build more reliable, powerful, and ambitious software by letting us think less about the machine and more about the problem.
+The destination is not a single "perfect" language, but an **ever-expanding toolkit that allows us to build more reliable, powerful, and ambitious software by letting us think less about the machine and more about the problem**.
 
 The solution is to move some tasks to virtual machine, interpeter or compiler to reduce complexity of programing for certain fields.
 
 ## The next step
-I think that with the advancing of LLM, programming would come the next humanized level which is to give coding task to AI, while leaving architecting tasks to human beings. 
-Software architects would focus on modularizaiton, tasks and messages definition, while AI implement each tasks with platform constraints. This doesn't mean programing could become easier, ont the conntrary, it would mean human beings would need to have much wider and higher level technique skills to be table to use AI as a tool to implment a solution at a higher efficiency. What AI can do is just the routine parts without creativity, it can't replace human with higher level of intelligence. This is just like that robot arms in a factory which can only replace general workers but can't replace engineers who design the production lines.
+I believe the advancement of LLMs will push programming to the next level of humanization: **offloading the coding task to AI, while reserving high-level architectural design for human beings**. Software architects would focus on modularization, defining the data flow, and message contracts, while the AI implements each task with all platform constraints handled.
+
+
+This won't make programming easier; quite the opposite. It will demand that humans possess a much wider and higher level of technical skill to effectively leverage AI as a tool for high-efficiency solution implementation. What AI can handle are just the routine parts without true creativity; it can't replace the human mind with a higher level of intelligence. **This is just like the robot arms in a factory which can only replace general workers but can't replace the engineers who design the production lines**.
