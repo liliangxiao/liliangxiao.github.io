@@ -36,17 +36,21 @@ To become fluent, you need to practice connecting ideas quickly using simple lan
     - **Degree** (a lot, a little)
         
     - **Color** (red, dark)
-        
-2. **Start with a Picture.** Always begin with a word that creates a simple image in your mind (e.g., "man," "book," "car"). This is your starting point.
     
+    At this step, we need to understand that we are encoding concepts into language, **it needs be practised to be fast**. For example, if your want to express a conept that a women is overwhelmed by doing a task and she could not bare it, you need to come up with the phrase "**drive sb. mad**" immediately, then you can say "The woman is driven mad by the task."
+     
+2. **Start with a Picture.** Always begin with a word that creates a simple image in your mind (e.g., "man," "book," "car"). This is your starting point.
+   **Imaging a situaion** if you need to talk on a topic. Words only become meaningful with it connects with another words with is it's environment. For example, if you want to talk about a movie, you might consider a situation that a boy is addicted to video games. In that case, a movie can distract him from video games and help him to focus on something healthy. So the topic can only be expanded when you find a situation.
+
 3. **Connect the Words.** Practice saying a short sentence out loud that connects your picture-word to the other keywords. **Use only simple, Fast Language.**
     
     - _Instead of (Slow):_ "He exhibited significant melancholy."
         
     - _Say (Fast):_ "The **man** sat alone, his **shoulders heavy** with **sadness**."
-        
-4. **Make it a Game.** For any question, see it as a task of connecting your keywords. With practice, this becomes automatic. You stop searching for words and start connecting ideas smoothly.
-    
+
+    At this step, it's important to **talk around the keywords without thinking deeper or in parallel** because when you think you will stuck.
+
+5. **Make it a Game.** For any question, see it as a task of connecting your keywords. With practice, this becomes automatic. You stop searching for words and start connecting ideas smoothly.
 
 **Conclusion:**
 

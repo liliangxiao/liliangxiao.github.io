@@ -31,6 +31,8 @@ Let's trace this journey of humanization.
     Python took the philosophy of simplification even further. Its core design goal was **readability and developer productivity.**
     - It offered a clean, concise syntax that reads almost like English.
     - Like Java, it used an **interpreter**, but it embraced dynamic typing and required less boilerplate code, allowing developers to translate thoughts into code with minimal friction.
+    
+    However, **using Python is like being a technician**: you tell it what to do using existing machinery (libraries, APIs), and it handles the complex work behind the scenes. Conversly, **using C/C++ is like being an engineer**: you design, build, and optimize the machinery itself — you decide how memory is arranged, how data flows, and how performance is achieved.
 
 *   **The Rise of Rust: Humanizing Safe Systems Programming**
     The trend of simplification created a gap. High-level languages like Java and Python came with a performance cost (garbage collection, interpreter overhead) that made them unsuitable for low-level systems tasks. Rust emerged to fill this gap with a novel approach.
@@ -47,6 +49,5 @@ The solution is to move some tasks to virtual machine, interpeter or compiler to
 
 ## The next step
 I believe the advancement of LLMs will push programming to the next level of humanization: **offloading the coding task to AI, while reserving high-level architectural design for human beings**. Software architects would focus on modularization, defining the data flow, and message contracts, while the AI implements each task with all platform constraints handled.
-
 
 This won't make programming easier; quite the opposite. It will demand that humans possess a much wider and higher level of technical skill to effectively leverage AI as a tool for high-efficiency solution implementation. What AI can handle are just the routine parts without true creativity; it can't replace the human mind with a higher level of intelligence. **This is just like the robot arms in a factory which can only replace general workers but can't replace the engineers who design the production lines**.
