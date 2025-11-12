@@ -20,10 +20,10 @@ In real-time systems, three common strategies are used:
 
 - **Rate Monotonic Priority**: Periodic Tasks are assigned static priorities accoriding to **running intervals(period, shorter the higher priority)**.  
 
-- **Deadline Monotonic**: Fixed Priority based on periodic task's deadlines — shorter deadlines get higher priority.  
+- **Deadline Monotonic**: Fixed Priority based on periodic task's deadlines — **shorter deadlines** get higher priority.  
   - Motor Control has the shortest deadline, so it ranks highest.
 
-- **Earliest Deadline First (EDF)**: Tasks priorities are dynamically caculated according to the nearest deadlines.  
+- **Earliest Deadline First (EDF)**: Periodic tasks priorities are dynamically caculated according to the **nearest deadline**s**.  
   - The task with the nearest deadline runs first.
 
 - **Mixed-Criticality Scheduling**
