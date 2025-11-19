@@ -17,4 +17,6 @@ Religion is a social operating system built on a core belief. It establishes beh
 
 Connecting a word or phrasal verb to a visual source or a simple, tangible action is the best way to make it stick and use it naturally.
 
-We can’t fully determine our future because we live within a society that supports us. What we can do is prepare ourselves so that we’re ready to receive that support and move toward our goals. Education and career development are good examples — we can’t succeed without them. Even a genius, without education or the right platform, may see their talent fade over time.
+We can’t fully determine our future because we reply on the supports from the society, but we can **attract** that supports and move toward our goals. Education and career development are good examples — we can’t succeed without them. Even a genius, without education or the right platform, may see their talents fade over time. However, we can attract the needed education and carreer with our passion since **the universe's rule to give supports only the selected people who are the most suitable candidate**.
+
+C has type compatibility, no matter what type you use(for example: enum, char, etc.), the compiler consider them to be compatible with int. This helps us to consider them in their essense and program without disturbance from the compiler. Rust stepped awary from this primitive beauty and engineers could understand the beauty to think with understanding the essence. Considering this, I think, a language that wants to replace C fully is not coming yet. [Software]

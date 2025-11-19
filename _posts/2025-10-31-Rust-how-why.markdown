@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Rust- Improving on C for Safety, Concurrency, and Efficiency
+title: Rust- Improving on C for Safety, But
 date: 2025-10-31 09:32:20 +0400
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: # Add image post (optional)
@@ -8,7 +8,7 @@ fig-caption: # Add figcaption (optional)
 tags:  [Software]
 --- 
 
-# Rust: Improving on C for Safety, Concurrency, and Efficiency
+# Rust: Improving on C for Safety, Concurrency, and Efficiency with limitations
 ```
                    +-----------------------------+
                    |        Rust vs C            |
@@ -73,6 +73,9 @@ Tooling: cargo (build system), clippy (linting), and automated documentation sup
 
 This combination allows developers to write robust, maintainable, and high-performance code faster than in C.
 
+## Limitations
+C has type compatibility. For example, the compiler considers enum and char to be compatible with int, and program could compile without disturbance from the compiler. This helps us to consider them in their essense . Rust stepped awary from this primitive simplicity and engineers lose understanding the essence. Considering this, I think, a true language that wants to replace C is not coming yet. 
+
 ## Conclusion
 
-Rust improves upon C by integrating compile-time memory safety, concurrency protection, and modern programming abstractions without sacrificing performance. Its ownership model, borrow checker, and tooling together reduce runtime errors and increase programmer productivity, making Rust an ideal choice for systems programming where both speed and reliability are crucial.
+Rust improves upon C by integrating compile-time memory safety, concurrency protection, and modern programming abstractions without sacrificing performance. Its ownership model, borrow checker, and tooling together reduce runtime errors and increase programmer productivity. However, Rust stepped awary from C's primitive beauty and is not a full replacement for C, especially in the area of low layer from programming.
