@@ -6,6 +6,7 @@ description: You’ll find this post in your `_posts` directory. Go ahead and ed
 img: # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags:  [Life]
+---
 
 ### The Stonecarver's Lesson - a logic error in success conditions
 
