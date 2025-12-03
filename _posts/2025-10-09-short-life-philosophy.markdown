@@ -3,7 +3,7 @@ layout: post
 title: Short Ideas
 date: 2025-10-09 09:32:20 +0400
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
-img: # Add image post (optional)
+img: # Add image post (optional) place in text: {% include youtube.html id="dQw4w9WgXcQ" %}
 fig-caption: # Add figcaption (optional)
 tags:  [Life, Philosophy]
 ---
@@ -103,8 +103,6 @@ Most Important:
 On the one hand, tension arises when the goal eclipses the person. Task-driven focus can seem cold, while people-driven focus can stall progress. The art of cooperation lies in the middle ground. We must learn to pursue our targets fiercely without forgetting to treat the people helping us gently.
 
 On the other hand, conflict is simply the gap between the target and the current reality. Since targets and situations are always changing, this gap is inherent. Consequently, the way we manage this gap drives the evolution of the situation. I believe we should actively maintain the gap at a controllable level to strike **a balance between flexibility and smoothness**. It is crucial to monitor this gap to see how we can narrow or enlarge it to drive progress.
-
-#{% include youtube.html id="dQw4w9WgXcQ" %}
 
 ### 🤝 Software developement in the AI era (Software) 
 Some people say that with AI having the ability of coding, software engineers are facing challenges. I　have tried and found that it's really amazing to have AI coding, the efficiency and quality of code is super. However, when using it in a real problem, I soon find that AI can only be a tool, it lacks the capability of requirements analysis and architecting. In one word, junior level engineer who can only do coding can really be replaced, but requirements and architecting related jobs can't be replaced. AI is still a tool to increase coding efficiency and and a searching engine for fast reference.
