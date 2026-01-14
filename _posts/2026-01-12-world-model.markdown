@@ -63,23 +63,22 @@ $\text{Reality} = \int (\text{Conscious Selection}) \, dt$
 **The Divergence**
 A 1-degree shift in trajectory is unnoticeable after 1 meter. But after 10 years, that 1-degree shift leads to a completely different continent.
 
----
-
 ## Part 4: The Operating Laws
 
-### 4. The Hierarchy: Active Selection vs. Passive Inertia
-* **Logic:** The "Past" ($t-1$) provides inertia. The "Future" ($t+1$) provides options. **You** are the active agent in the middle.
-* **Action:** Do not let the inertia of the past determine the next moment. Use active consciousness to select a better $t+1$.
+### 4. The Law of Hierarchy: Active Choice vs. Passive Inertia
 
-### 5. The Trigger: Action as Confirmation
-* **Logic:** Action is the act of locking in the probability. Thinking about Option B but doing Option A means you selected A.
-* **Action:** Your body's movement is the voting button.
+* **Logic:** The "Past" () provides inertia. The "Future" () provides options. **You** are the active agent in the middle.
+* **Action:** Do not let the inertia of the past determine the next moment. Use active consciousness to choose a better . At this moment, **imagination** is important; it draws the blueprint and determines the angle.
 
-### 6. The Process: Trust the Accumulation
-* **Logic:** Since micro-selections are invisible, you must understand the math of integration.
-* **Action:** Ignore the lack of immediate visible change. Maintain the angle.
+### 5. The Law of Triggers: Action is Confirmation
 
----
+* **Logic:** Action is the act of locking in probability. Thinking about Option B but doing Option A means you have chosen A.
+* **Action:** Your body's movement is the voting button. At this moment, **faith** is important; it gives you firm belief and infuses you with energy.
+
+### 6. The Law of Process: Trust in Accumulation
+
+* **Logic:** Since microscopic choices are invisible, you must understand the mathematical principle of integrals.
+* **Action:** Ignore the changes that are invisible right now. Maintain the angle. This requires "faith" and "imagination" to be constantly reinforced; you need to **constantly think and speak** in order to maintain the angle. Just as a ship needs to hold the rudder tight while turning, once the turn is complete, it will naturally point towards the target and move forward. At the same time, **courage** is also needed, because the blueprint is not reality, and without the courage to go all out, it will be very difficult to persist. You need to understand that if you don't fight, what awaits you is a combination of maximum probability events, and this combination is definitely a mere survival without any miracles at all.
 
 ## Final Installation Code
 
@@ -152,16 +151,15 @@ $\text{现实} = \int (\text{意识选择}) \, dt$
 
 ### 4. 层级法则：主动选择 vs 被动惯性
 * **逻辑：** “过去”($t-1$) 提供惯性。“未来”($t+1$) 提供选项。**你**是中间的主动代理人。
-* **行动：** 不要让过去的惯性决定下一刻。用主动的意识去选择一个更好的 $t+1$。
+* **行动：** 不要让过去的惯性决定下一刻。用主动的意识去选择一个更好的 $t+1$。这时候，想像力很重要，他绘制蓝图，确定角度。
 
 ### 5. 触发法则：行动即确认
 * **逻辑：** 行动是锁定概率的行为。想着选项 B 但做了选项 A，意味着你选择了 A。
-* **行动：** 你身体的移动就是投票按钮。
+* **行动：** 你身体的移动就是投票按钮。这时候，**信仰**很重要，他给你坚定的信念，给你注入能量。
 
 ### 6. 过程法则：信任累积
 * **逻辑：** 由于微观选择是不可见的，你必须理解积分的数学原理。
-* **行动：** 忽略眼前看不见的改变。保持角度。
-
+* **行动：** 忽略眼前看不见的改变。保持角度。这需要“信仰”和“想像力”不断反复强化，你需要**不断地想，説**，从而保持角度。就入船在转向时需要握紧方向舵，完成转向就会自然指向目标前进。同时也需要**勇气**，因为蓝图不是现实，没有拼了的勇气会很难去坚持。你需要明白，不拼，等待自己的是由最大概率事件的组合，这个组合一定是完全没有任何奇迹的苟活。
 ---
 
 ## 最终植入代码
