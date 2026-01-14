@@ -6,3 +6,39 @@
   ga('create', '{{ site.analytics }}', 'auto');
   ga('send', 'pageview');
 </script> <!-- End Analytics -->
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      tags: 'ams'
+    },
+    options: {
+      ignoreHtmlClass: 'tex2jax_ignore',
+      processHtmlClass: 'tex2jax_process'
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
+    }
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<style>
+  blockquote {
+    background-color: #fff8e1 !important; /* Light Yellow Background */
+    border-left: 6px solid #ffc107 !important; /* Gold side bar */
+    color: #4a4a4a !important; /* Dark Grey Text */
+    padding: 15px !important;
+    margin: 20px 0 !important;
+    font-size: 1.1em !important;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05); /* Subtle shadow for depth */
+  }
+</style>
