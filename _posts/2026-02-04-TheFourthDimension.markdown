@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "空间内嵌的第四维-时间维张度与引力的关系 (The Fourth Dimension Embedded in Space-Time Tension and Gravity)"
-date: 2023-10-28 12:00:00 +0800
-tags: [Physics]
+date: 2026-02-04 12:00:00 +0800
+tags: [05_Physics]
 ---
 
 **摘要**

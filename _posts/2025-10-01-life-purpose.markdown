@@ -3,7 +3,7 @@ layout: post
 title: "The Logic of Purpose- A Guide to Human Efficiency / 生命的逻辑：高效人生指南"
 date: 2025-10-01 09:32:20 +0400
 description: Why life purpose is an optimization problem. / 为什么人生目标本质上是一个优化问题。
-tags: [Life, Philosophy, Strategy]
+tags: [02_Philosophy]
 ---
 
 # A Logical Framework for Life Purpose

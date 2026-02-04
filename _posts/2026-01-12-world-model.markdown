@@ -2,7 +2,7 @@
 layout: post
 title: "My World Model: Probability Selection and Time Integration / 我的世界模型：概率选择与时间积分"
 date: 2026-01-13 9:00:00 +0400
-tags: [Life, Philosophy]
+tags: [02_Philosophy]
 description: A logical model explaining how consciousness selects the future and how time accumulation reorganizes reality.
 math: true
 ---

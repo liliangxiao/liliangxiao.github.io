@@ -5,7 +5,7 @@ date: 2025-11-03 09:32:20 +0400
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: # Add image post (optional)
 fig-caption: # Add figcaption (optional)
-tags:  [Software]
+tags:  [01_Software]
 --- 
 # The Application Scenarios for RTOS, Rich RTOS and Linux
 

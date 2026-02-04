@@ -5,7 +5,7 @@ date: 2025-10-04 09:32:20 +0400
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: # Add image post (optional)
 fig-caption: # Add figcaption (optional)
-tags: [Life, Philosophy]
+tags: [02_Philosophy]
 ---
 
 ### **The Art of Dimensional Reduction: A Strategy for Overcoming Any Challenge**

@@ -2,7 +2,7 @@
 layout: post
 title: "An Advanced Look at the C++ Object Model and Polymorphism"
 date: 2026-01-12 12:00:00 -0500
-tags: [Software]
+tags: [01_Software]
 ---
 
 C++ is often taught as a language of high-level abstractions: classes, inheritance hierarchies, and interfaces. We learn the syntax and the design patterns. But true mastery of C++ requires looking past the syntax sugar and understanding the concrete machinery the compiler builds for us.
