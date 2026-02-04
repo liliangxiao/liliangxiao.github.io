@@ -9,7 +9,7 @@ site-twitter: #if your site has a twitter account, enter it here
 # Author Settings
 author: Ryder Li # add your name
 author-img: ryder-li.jpg # add your photo
-about-author: I see myself as a dream chaser, and I share my personal reflections here, hoping to motivate every reader to keep making progress. # add description
+about-author: Firmware Engineer passionate about Embedded Linux, RTOS, and C/C++ Optimization. Exploring the intersection of hardware constraints and software efficiency. # add description
 #social-twitter: # add your Twitter handle
 social-facebook: # add your Facebook handle
 social-github: liliangxiao # add your Github handle
