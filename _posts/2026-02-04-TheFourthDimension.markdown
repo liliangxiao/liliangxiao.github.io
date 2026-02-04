@@ -31,11 +31,11 @@ The birth of the universe was the **collapse and fragmentation** of this super b
 * 每一个残骸都继承了母体的属性：**它们都是闭合的时空死结**。
   Each remnant inherited the attributes of the mother body: **They are all closed spacetime dead knots.**
 
-这些碎片，就是今天的电子、夸克和质子。
-所以，**每一个基本粒子，本质上都是一个微型的黑洞。** 它们锁住了能量，构成了我们世界的“实体”。
+**这些碎片，因为其内部能量的不同运行形态和组合，使其成为如积木一样的组件，可以构建更为庞大的微观粒子。 每一个基础积木组件，本质上都是一个微型的黑洞。它们锁住了能量，构成了我们世界的‘实体’。电子就是基础组件之一，而中子、质子则是由基础组件搭建的巨大稳定结构。它们之间依靠时间张力产生的吸力进行粘合，从而形成固定形态——这种张力源于能量运动组合成的微型黑洞结构所导致的时间维张力不均匀。 而这质子、中子进一步组建宏观世界。**
 
-These fragments are today's electrons, quarks, and protons.
-Therefore, **every elementary particle is essentially a microscopic black hole.** They lock up energy and constitute the "substance" of our world.
+**Due to the varying operational patterns and combinations of their internal energy, these fragments function like building blocks—components capable of constructing larger microscopic particles. Essentially, every fundamental building block is a miniature black hole. They lock energy within, constituting the 'physical reality' of our world.**
+
+**The electron is one of these basic components, while neutrons and protons are massive, stable structures assembled from them. They are bound into fixed forms by the suction of time tension. This tension stems from the unevenness of tension in the time dimension, which is caused by the micro black hole structures formed by combined energy movements. In turn, these protons and neutrons go on to build the macroscopic world.**
 
 ---
 

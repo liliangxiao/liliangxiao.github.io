@@ -87,10 +87,6 @@ A 1-degree shift in trajectory is unnoticeable after 1 meter. But after 10 years
 > I trust Time to multiply my angle into a new Destiny."
 
 <br>
-<br>
-<hr>
-<br>
-<br>
 
 # 我的世界模型：概率选择与时间积分
 
