@@ -1,169 +1,493 @@
 ---
 layout: post
-title: "An Advanced Look at the C++ Object Model and Polymorphism"
+title: "An Advanced Look at the C++ expansion methodology of C: Object Memory, Symbol name and inheritance "
 date: 2026-01-12 12:00:00 -0500
 tags: [01_Software]
 ---
+# C++ Object Model (Based on g++ Compiler): Underlying C Equivalent Mapping of Inheritance, Name Mangling, and Operator Overloading
 
-C++ is often taught as a language of high-level abstractions: classes, inheritance hierarchies, and interfaces. We learn the syntax and the design patterns. But true mastery of C++ requires looking past the syntax sugar and understanding the concrete machinery the compiler builds for us.
+The g++ compiler adheres to the Itanium C++ ABI standard. Its underlying implementation reduces C++ object-oriented features into C-language `struct` memory layouts and global function calls with a `this` pointer.
 
-At its core, C++ maintains a pragmatic lineage with C. It takes the humble `struct`, associates it with functions to create a new "name class," and then imbues it with magic.
+## I. Name Mangling
 
-This article dives into that magic. We will bypass beginner tutorials and explore the low-level implementation details of C++ polymorphism, looking at stack frames, memory layouts, and the hidden costs of the `virtual` keyword.
+g++ does not directly link C++ overloaded or member functions. At compile time, it encodes the scope, class name, and parameter types into the function name to generate a globally unique symbol.
 
-*(Note: While many mechanisms discussed here are mandated by the ISO C++ standard, specific implementation details like vtable layout and RTTI offsets are determined by the Application Binary Interface (ABI), such as the Itanium C++ ABI used by GCC/Clang or the MSVC ABI. This article discusses the conceptual models common to most modern implementations.)*
+**g++ (Itanium ABI) Core Encoding Rules**:
+`_Z` (start) + `N` (nested scope start) + `length + name` + `E` (scope end) + `parameter type abbreviation`
 
-## 1. The "Super Struct" and the Hidden Parameter
+* **C++ Declaration**: `void Derived::f()`
+* **g++ Mangled Symbol**: `_ZN7Derived1fEv` (`7` = length of Derived, `1` = length of f, `v` = void parameter).
+* **Underlying Equivalent C Signature**: `void _ZN7Derived1fEv(struct Derived* const this)`
 
-To understand C++ classes, one must first understand that the hardware knows nothing about them. The CPU only understands memory addresses and instructions.
+---
 
-Fundamentally, a non-polymorphic C++ class is just a C `struct`. Data members are laid out sequentially in memory (respecting alignment requirements). Member functions are, in reality, standard global functions that have undergone name-mangling to ensure uniqueness.
+## II. Operator Overloading
 
-The "association" between the data (the struct) and the behavior (the functions) is achieved through the hidden `this` pointer.
+Operator overloading is syntactic sugar. The compiler statically maps intuitive arithmetic or assignment expressions to ordinary member function calls with special mangled symbols. This mechanism does not alter object memory layout (unless the operator is declared `virtual`).
 
-Consider a simple class:
+### 1. Itanium ABI Operator Encoding Rules
+
+The Itanium ABI uses fixed two-letter abbreviations for operators:
+
+* `+` is encoded as `pl` (plus)
+* `=` is encoded as `aS` (assign)
+* `==` is encoded as `eq` (equal)
+
+### 2. Code and Underlying Mapping
+
+**C++ Source Code**:
 
 ```cpp
-class Warrior {
+class Vector {
 public:
-    int health;
-    void takeDamage(int amount) {
-        health -= amount;
-    }
+    int x, y;
+    // Overload + and =
+    Vector operator+(const Vector& rhs) const;
+    Vector& operator=(const Vector& rhs);
 };
 
-```
-
-Under the hood, the compiler transforms this into something resembling C:
-
-```c
-struct Warrior {
-    int health;
-};
-
-// Munged name roughly mimicking: Warrior::takeDamage(Warrior* this, int amount)
-void _ZN7Warrior10takeDamageEii(Warrior* const this, int amount) {
-    this->health -= amount;
+void test() {
+    Vector v1, v2, v3;
+    v1 = v2 + v3; // Concise syntax
 }
 
 ```
 
-When you call `myWarrior.takeDamage(10)`, the compiler optimizes this into a call to the global function, implicitly passing the address of `myWarrior` as the first argument. The `this` pointer is the glue that turns a disconnected set of functions into a "super struct."
+**g++ Equivalent C Code**:
 
-## 2. Dynamic Polymorphism: The Vtable Mechanism
+```c
+struct Vector { int x; int y; };
 
-The "super struct" model works perfectly until we introduce runtime polymorphism—the ability for a pointer of type `Base*` to invoke behavior defined in type `Derived`.
+/* Equivalent C function for Vector::operator+(const Vector&) const */
+/* Mangled: _ZNK6VectorplERKS_ (K=const qualifier, pl=plus, RKS_=reference to const self type) */
+struct Vector _ZNK6VectorplERKS_(const struct Vector* const this, const struct Vector* rhs) {
+    struct Vector temp;
+    temp.x = this->x + rhs->x;
+    temp.y = this->y + rhs->y;
+    return temp;
+}
 
-C++ solves this using late binding, orchestrated through the **Virtual Method Table (vtable)**.
+/* Equivalent C function for Vector::operator=(const Vector&) */
+/* Mangled: _ZN6VectoraSERKS_ (aS=assign) */
+struct Vector* _ZN6VectoraSERKS_(struct Vector* const this, const struct Vector* rhs) {
+    this->x = rhs->x;
+    this->y = rhs->y;
+    return this;
+}
 
-### The Virtual Contract
+/* C++: v1 = v2 + v3; underlying C expansion */
+void test_c() {
+    struct Vector v1, v2, v3;
+    
+    /* 1. Execute operator+, generating a temporary object */
+    struct Vector temp = _ZNK6VectorplERKS_(&v2, &v3);
+    
+    /* 2. Execute operator=, assigning the temporary object to v1 */
+    _ZN6VectoraSERKS_(&v1, &temp);
+}
 
-The moment a class contains the `virtual` keyword, its memory layout changes fundamentally.
+```
 
-1. **The Vtable:** For every class that contains or inherits virtual functions, the compiler generates a static table at compile time. This table contains function pointers to the most derived implementations of the virtual functions for that specific class.
-2. **The Vptr:** Every *instance* (object) of that class is secretly augmented with a hidden pointer, usually located at the very beginning of the struct layout. This "virtual pointer" (vptr) points to the vtable associated with the object's actual run-time type.
+---
 
-### The Domino Effect of `virtual`
+## III. Single Inheritance
 
-As noted in advanced C++ discussions, only the first `virtual` keyword matters in an inheritance hierarchy.
+Base class data is located at the absolute starting address of the object memory, followed immediately by derived class data. Base and derived classes share the same virtual table pointer (`_vptr`).
+
+### 1. Memory Layout (g++ 64-bit)
+
+```text
+[ Derived Instance Start Address ]
+|----------------|
+| [ Base Part ]  |
+|   - _vptr      | --> Points to Derived vtable (records _ZN7Derived1fEv address)
+|   - Base::a    |
+|----------------|
+| [ Derived ]    |
+|   - Derived::b |
+|----------------|
+
+```
+
+### 2. Code and Underlying Mapping
+
+**C++ Source Code**:
 
 ```cpp
-struct Base { virtual void func(); };
-struct Intermediate : Base { void func(); }; // implicitly virtual
-struct Derived : Intermediate { void func() override; }; // still virtual
+class Base { public: int a; virtual void f(); };
+class Derived : public Base { public: int b; virtual void f() override; };
 
 ```
 
-Once a method is tagged virtual, its slot in the vtable is established. Descendants inheriting that function automatically inherit its "virtualness," regardless of whether they explicitly use the `virtual` or `override` keywords (though `override` is best practice for safety).
+**g++ Equivalent C Code**:
 
-### The Mechanism in Action
+```c
+struct Base { void** _vptr; int a; };
 
-When a constructor runs, its first job—before executing the body of the constructor—is to initialize the object's embedded `vptr` to point to the correct vtable for the class being constructed.
+struct Derived {
+    struct Base _base; 
+    int b;
+};
 
-When you make a call like `basePtr->someVirtualFunc()`, the compiler generates code that performs indirect addressing:
+void _ZN7Derived1fEv(struct Derived* const this) { /* ... */ }
 
-1. Follow `basePtr` to the object's memory address.
-2. Read the `vptr` found at the start of that object.
-3. Follow the `vptr` to the vtable.
-4. Index into the vtable by a known constant offset to find the address of the target function.
-5. Jump to that address, passing the original object address as `this`.
-
-Crucially, an object can bypass this mechanism to explicitly call a parent's implementation using scoping: `object->FatherClass::method()`. This results in a direct, compile-time resolved call, ignoring the vtable entirely.
-
-## 3. RTTI and dynamic_cast: Peeking Past the Vtable
-
-The virtual mechanism handles dispatching functions, but sometimes we need to know the actual type of an object at runtime, or safely downcast a pointer. This is the domain of Run-Time Type Information (RTTI).
-
-Where does this information live?
-
-In many common ABIs (like Itanium), the RTTI data is tightly coupled with the vtable. The `vptr` in the object usually points to the *start of the function pointers* in the vtable. However, the vtable structure itself often extends *backwards* in memory from that point.
-
-The memory block containing the vtable often looks like this (negative offsets relative to what the vptr points to):
-
-```
-[ ... ]
-[ Offset to Top (used in MI) ] <-- vptr points ~16 bytes after this
-[ Pointer to std::type_info  ] <-- vptr points ~8 bytes after this
-[ Virtual Func Pointer 1     ] <-- The actual address held by object._vptr
-[ Virtual Func Pointer 2     ]
-[ ... ]
+/* Polymorphic call: pb->f() */
+(*pb->_vptr[0])(pb);
 
 ```
 
-When you execute a `dynamic_cast<Derived*>(basePtr)`, the runtime performs a complex check:
+---
 
-1. It uses the `vptr` in `basePtr` to locate the vtable.
-2. It steps backwards from the vtable address (e.g., vtable - 8 bytes) to find the pointer to the `std::type_info` structure for the object's actual type.
-3. It traverses the inheritance graph described by that `type_info` to determine if the target type in the cast is a valid base class or the exact class of the runtime object.
+## IV. Virtual Inheritance
 
-If the traversal confirms the relationship, the pointer is adjusted and returned; otherwise, `nullptr` is returned. This traversal is why `dynamic_cast` is significantly slower than a C-style cast or `static_cast`.
+The virtual base class is forced to the **very end** of the object memory. Accessing the virtual base requires indirect addressing via the virtual base offset (`vbase_offset`) stored in the virtual table.
 
-## 4. The Thicket of Multiple Inheritance
+### 1. Memory Layout (g++ 64-bit)
 
-Multiple Inheritance (MI) throws a wrench into the clean "pointer at the start of the struct" model. If `class Derived : public BaseA, public BaseB`, a `Derived` object must contain sub-objects for both `BaseA` and `BaseB`.
-
-The memory layout often looks like this:
-
-```
-+-----------------------+ <-- Address of Derived object AND BaseA subobject
-| vptr_BaseA            |     (Points to Derived's vtable for BaseA functions)
-| BaseA data members    |
-+-----------------------+ <-- Address of BaseB subobject
-| vptr_BaseB            |     (Points to a secondary vtable)
-| BaseB data members    |
-+-----------------------+
-| Derived data members  |
-+-----------------------+
+```text
+[ Left Instance Start Address ]
+|----------------|
+| [ Left Self ]  |
+|   - _vptr_Left | --> Points to Left vtable (records vbase_offset)
+|   - Left::l    |
+|----------------|
+| [ Top Shared ] | <-- Physically placed at the bottom
+|   - _vptr_Top  | 
+|   - Top::t     |
+|----------------|
 
 ```
 
-### The "Top Offset" and "This" Adjustment
+### 2. Code and Underlying Mapping
 
-A critical problem arises: if I have a pointer to the `BaseB` subobject and call a virtual function overridden by `Derived`, the function expects a `this` pointer pointing to the *start* of the whole `Derived` object, not just the `BaseB` middle slice.
+**C++ Source Code**:
 
-The compiler must perform "this adjustment."
-
-In MI scenarios, the vtables become more complex. The vtable used by the `vptr_BaseB` subobject often contains "thunks." A thunk is a tiny assembly snippet that:
-
-1. Adjusts the `this` pointer by adding or subtracting the necessary offset to reach the top of the `Derived` object.
-2. Jumps to the actual virtual function implementation in `Derived`.
-
-Alternatively, the ABI might store the "offset to top" directly within the vtable structure (as shown in the RTTI section above), which the runtime uses during casts and complex calls to ensure the `this` pointer is always correct for the function receiving it.
-
-## 5. Beyond Dynamic Polymorphism
-
-While dynamic polymorphism via vtables is the most complex form, advanced C++ recognizes other forms that associate functions with structs.
-
-**Static Polymorphism (Templates):** The association happens at compile-time. The compiler generates distinct "super structs" for every type combination used.
-
-**Ad-hoc Polymorphism (Operator Overloading):** C++ allows us to redefine the very nature of standard operations (`+`, `-`, `()`, `[]`, even `new` and `delete`) for our types.
-
-Overloading `operator()` turns an object into a "functor," making the struct itself callable like a function. Overloading `new` and `delete` allows a class to take complete control over its own memory allocation strategy, bypassing the default heap manager—a common technique in high-performance gaming and financial engines.
-
-## Conclusion
-
-C++ abstractions are powerful, but they are not magic. They are constructed from pointers, offsets, and jump tables. Understanding the vptr, the structure of the vtable, the cost of RTTI lookups, and the memory layout implications of multiple inheritance allows an engineer to make informed decisions about performance and design, ensuring that the "super struct" behaves exactly as intended.
+```cpp
+class Top { public: int t; virtual void f(); };
+class Left : virtual public Top { public: int l; };
 
 ```
 
+**g++ Equivalent C Code**:
+
+```c
+struct Top { void** _vptr_Top; int t; };
+
+struct Left {
+    void** _vptr_Left;
+    int l;
+    struct Top _top;
+};
+
+/* C++: pLeft->t = 1; */
+/* g++ specification: vbase_offset is stored at _vptr[-3] */
+long vbase_offset = (long)(pLeft->_vptr_Left[-3]); 
+struct Top* pTop = (struct Top*)((char*)pLeft + vbase_offset);
+pTop->t = 1;
+
 ```
+
+---
+
+## V. Multiple Virtual Inheritance
+
+The object contains multiple intermediate base class `_vptr`s and shares a single virtual base class at the bottom. Polymorphic calls rely on `vcall_offset` and special `Virtual Thunk` functions to adjust the `this` pointer.
+
+### 1. Memory Layout (g++ 64-bit)
+
+```text
+[ Bottom Instance Start Address ]
+|----------------|
+| [ Left Part ]  | <-- pLeft points here (offset 0)
+|   - _vptr_Left | --> Points to Bottom primary vtable
+|   - Left::l    |
+|----------------|
+| [ Right Part ] | <-- pRight points here (static positive offset)
+|   - _vptr_Right| --> Points to Bottom secondary vtable (contains Virtual Thunk address)
+|   - Right::r   |
+|----------------|
+| [ Bottom Self] |
+|   - Bottom::b  |
+|----------------|
+| [ Top Shared ] | <-- Located at the very end of memory
+|   - _vptr_Top  | --> Points to virtual base specific vtable (records vcall_offset)
+|   - Top::t     |
+|----------------|
+
+```
+
+### 2. Code and Virtual Thunk Mapping
+
+When `Bottom` overrides `Top::f()`, executing `Top* p = new Bottom(); p->f();` requires the passed `this` pointer to be negatively adjusted back to the `Bottom` starting address.
+
+**g++ Equivalent C Code**:
+
+```c
+void _ZN6Bottom1fEv(struct Bottom* const this) { /* ... */ }
+
+/* g++ Virtual Thunk (_ZTv0_n24_N6Bottom1fEv) */
+void _ZTv0_n24_N6Bottom1fEv(struct Top* this_ptr) {
+    long vcall_offset = (long)(this_ptr->_vptr_Top[-3]); 
+    struct Bottom* real_this = (struct Bottom*)((char*)this_ptr + vcall_offset);
+    _ZN6Bottom1fEv(real_this);
+}
+
+/* Polymorphic call fetches Virtual Thunk address via vtable */
+(*p->_vptr_Top[0])(p); 
+
+```
+
+---
+
+## VI. Core Mapping Rules Summary
+
+1. **Member Mapping**: Objects are transformed into nested `struct`s; methods are transformed into global functions with `this` as the first parameter.
+2. **Name Mangling**: Ordinary functions and operators (`+`, `=`) are re-encoded into globally unique symbols via ABI rules.
+3. **Operator Overloading**: Code-level `v1 = v2 + v3` is statically transformed into nested global function calls.
+4. **Single Inheritance Polymorphism**: Function pointers are retrieved and called via array indexing on the `_vptr` at the object's head.
+5. **Virtual Inheritance Addressing**: The absolute address of the trailing virtual base class is calculated dynamically using `vbase_offset` from the `_vptr` table.
+6. **Multiple Virtual Inheritance Polymorphism**: The virtual table stores `Virtual Thunk` trampoline function addresses, dynamically adjusting the `this` pointer at runtime via `vcall_offset` to match the actual owner of the overriding function.
+
+# C++ 对象模型 (基于 g++ 编译器)：继承机制、Name Mangling 与运算符重载的底层 C 等效映射
+
+g++ 编译器遵循 Itanium C++ ABI 标准。其底层实现将 C++ 面向对象特性降维转化为 C 语言的 `struct` 内存排布与带 `this` 指针的全局函数调用。
+
+## 一、 名称修饰 (Name Mangling)
+
+g++ 不支持直接链接 C++ 重载函数或成员函数。它在编译期将作用域、类名与参数类型编码入函数名，生成全局唯一符号。
+
+**g++ (Itanium ABI) 核心编码规则**：
+`_Z` (起始) + `N` (嵌套作用域开始) + `名称长度+名称` + `E` (作用域结束) + `参数类型缩写`
+
+* **C++ 声明**：`void Derived::f()`
+* **g++ Munged 符号**：`_ZN7Derived1fEv` (`7`=Derived长度, `1`=f长度, `v`=void参数)。
+* **底层等效 C 签名**：`void _ZN7Derived1fEv(struct Derived* const this)`
+
+---
+
+## 二、 运算符重载 (Operator Overloading)
+
+运算符重载本质是语法糖。编译器将直观的算术或赋值表达式，静态映射为带有特殊 Munged 符号的普通成员函数调用。此机制不改变对象的内存布局（除非运算符被声明为 `virtual`）。
+
+### 1. Itanium ABI 运算符编码规则
+
+Itanium ABI 使用固定的两个字母缩写表示运算符：
+
+* `+` 编码为 `pl` (plus)
+* `=` 编码为 `aS` (assign)
+* `==` 编码为 `eq` (equal)
+
+### 2. 代码与底层映射
+
+**C++ 源码**：
+
+```cpp
+class Vector {
+public:
+    int x, y;
+    // 重载 + 与 =
+    Vector operator+(const Vector& rhs) const;
+    Vector& operator=(const Vector& rhs);
+};
+
+void test() {
+    Vector v1, v2, v3;
+    v1 = v2 + v3; // 极简语法
+}
+
+```
+
+**g++ 等效 C 代码**：
+
+```c
+struct Vector { int x; int y; };
+
+/* Vector::operator+(const Vector&) const 的等效 C 函数 */
+/* Munged: _ZNK6VectorplERKS_ (K=const修饰词, pl=plus, RKS_=引用到常量自身类型) */
+struct Vector _ZNK6VectorplERKS_(const struct Vector* const this, const struct Vector* rhs) {
+    struct Vector temp;
+    temp.x = this->x + rhs->x;
+    temp.y = this->y + rhs->y;
+    return temp;
+}
+
+/* Vector::operator=(const Vector&) 的等效 C 函数 */
+/* Munged: _ZN6VectoraSERKS_ (aS=assign) */
+struct Vector* _ZN6VectoraSERKS_(struct Vector* const this, const struct Vector* rhs) {
+    this->x = rhs->x;
+    this->y = rhs->y;
+    return this;
+}
+
+/* C++: v1 = v2 + v3; 的底层 C 展开 */
+void test_c() {
+    struct Vector v1, v2, v3;
+    
+    /* 1. 执行 operator+，生成临时对象 */
+    struct Vector temp = _ZNK6VectorplERKS_(&v2, &v3);
+    
+    /* 2. 执行 operator=，将临时对象赋值给 v1 */
+    _ZN6VectoraSERKS_(&v1, &temp);
+}
+
+```
+
+---
+
+## 三、 单继承 (Single Inheritance)
+
+基类数据位于对象内存绝对首地址，子类数据紧随其后。基类与子类共享同一个虚表指针 (`_vptr`)。
+
+### 1. 内存布局 (g++ 64-bit)
+
+```text
+[ Derived 实例首地址 ]
+|----------------|
+| [ Base 部分 ]  |
+|   - _vptr      | --> 指向 Derived 虚表 (记录 _ZN7Derived1fEv 地址)
+|   - Base::a    |
+|----------------|
+| [ Derived ]    |
+|   - Derived::b |
+|----------------|
+
+```
+
+### 2. 代码与底层映射
+
+**C++ 源码**：
+
+```cpp
+class Base { public: int a; virtual void f(); };
+class Derived : public Base { public: int b; virtual void f() override; };
+
+```
+
+**g++ 等效 C 代码**：
+
+```c
+struct Base { void** _vptr; int a; };
+
+struct Derived {
+    struct Base _base; 
+    int b;
+};
+
+void _ZN7Derived1fEv(struct Derived* const this) { /* ... */ }
+
+/* 多态调用: pb->f() */
+(*pb->_vptr[0])(pb);
+
+```
+
+---
+
+## 四、 虚继承 (Virtual Inheritance)
+
+虚基类 (Virtual Base) 强制放置在对象内存的最末端。访问虚基类必须通过虚表中的虚基类偏移量 (vbase_offset) 进行间接寻址。
+
+### 1. 内存布局 (g++ 64-bit)
+
+```text
+[ Left 实例首地址 ]
+|----------------|
+| [ Left 自身 ]  |
+|   - _vptr_Left | --> 指向 Left 虚表 (记录 vbase_offset)
+|   - Left::l    |
+|----------------|
+| [ Top 共享部 ] | <-- 物理位置垫底
+|   - _vptr_Top  | 
+|   - Top::t     |
+|----------------|
+
+```
+
+### 2. 代码与底层映射
+
+**C++ 源码**：
+
+```cpp
+class Top { public: int t; virtual void f(); };
+class Left : virtual public Top { public: int l; };
+
+```
+
+**g++ 等效 C 代码**：
+
+```c
+struct Top { void** _vptr_Top; int t; };
+
+struct Left {
+    void** _vptr_Left;
+    int l;
+    struct Top _top;
+};
+
+/* C++: pLeft->t = 1; */
+/* g++ 规范: vbase_offset 存储在 _vptr[-3] */
+long vbase_offset = (long)(pLeft->_vptr_Left[-3]); 
+struct Top* pTop = (struct Top*)((char*)pLeft + vbase_offset);
+pTop->t = 1;
+
+```
+
+---
+
+## 五、 多重虚继承 (Multiple Virtual Inheritance)
+
+对象包含多个中间基类的 `_vptr`，共享唯一垫底的虚基类。多态调用依赖 `vcall_offset` 和特殊的 `Virtual Thunk` 函数修正 `this` 指针。
+
+### 1. 内存布局 (g++ 64-bit)
+
+```text
+[ Bottom 实例首地址 ]
+|----------------|
+| [ Left 部分 ]  | <-- pLeft 指向此处 (offset 0)
+|   - _vptr_Left | --> 指向 Bottom 主虚表
+|   - Left::l    |
+|----------------|
+| [ Right 部分 ] | <-- pRight 指向此处 (静态正向偏移)
+|   - _vptr_Right| --> 指向 Bottom 副虚表 (含 Virtual Thunk 地址)
+|   - Right::r   |
+|----------------|
+| [ Bottom 自身] |
+|   - Bottom::b  |
+|----------------|
+| [ Top 共享部 ] | <-- 位于内存最末端
+|   - _vptr_Top  | --> 指向虚基类专用的虚表 (记录 vcall_offset)
+|   - Top::t     |
+|----------------|
+
+```
+
+### 2. 代码与 Virtual Thunk 映射
+
+当 `Bottom` 重写 `Top::f()`，执行 `Top* p = new Bottom(); p->f();` 时，传入的 `this` 必须负向回拨至 `Bottom` 首地址。
+
+**g++ 等效 C 代码**：
+
+```c
+void _ZN6Bottom1fEv(struct Bottom* const this) { /* ... */ }
+
+/* g++ Virtual Thunk (_ZTv0_n24_N6Bottom1fEv) */
+void _ZTv0_n24_N6Bottom1fEv(struct Top* this_ptr) {
+    long vcall_offset = (long)(this_ptr->_vptr_Top[-3]); 
+    struct Bottom* real_this = (struct Bottom*)((char*)this_ptr + vcall_offset);
+    _ZN6Bottom1fEv(real_this);
+}
+
+/* 多态调用查表获取 Virtual Thunk 地址 */
+(*p->_vptr_Top[0])(p); 
+
+```
+
+---
+
+## 六、 核心规则映射总结
+
+1. **成员映射**：对象转化为嵌套 `struct`，方法转化为首参数为 `this` 的全局函数。
+2. **名称修饰**：普通函数与运算符 (`+`, `=`) 均通过 ABI 规则重新编码为全局唯一符号。
+3. **运算重载**：代码级别的 `v1 = v2 + v3` 静态转换为多层嵌套的全局函数调用。
+4. **单继承多态**：通过对象首部的 `_vptr` 查表获取函数指针并调用。
+5. **虚继承寻址**：通过 `_vptr` 表内的 `vbase_offset` 动态计算末尾虚基类的地址。
+6. **多重虚继承多态**：虚表存储 `Virtual Thunk` 垫片函数地址，在运行时通过 `vcall_offset` 动态回拨 `this` 指针以匹配重写函数的真实属主。
