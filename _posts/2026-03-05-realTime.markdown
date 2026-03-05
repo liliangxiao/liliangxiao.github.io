@@ -6,6 +6,8 @@ description: ...
 tags:  [01_Software]
 --- 
 # Pain Points and Countermeasures in Hard Real-Time Firmware Design 固件硬实时设计的痛点与对策
+**This article focuses on optimizing key scenarios under performance constraints, and does not completely replace or overturn existing real-time system designs. For non-critical or resource rich scenarios, we still use the traditional task-based theory. If we need to calculate the latest execution time, we need to consider the impact of critical scenarios on the latest execution time.
+本文只针对性能紧张情况下的关键场景进行优化，不是完全取代颠覆现有实时系统设计。对于非关键且性能资源紧张的场景，我们仍然使用基于任务的传统理论，如果需要计算最晚执行时间，需要考虑关键场景的对最迟运行时间的影响。**
 ## Practical Dilemmas 实践中的困惑
 ### **Terminology Flaw (用语的偏差):**
 The term "Real-Time System" is inherently misleading as it fails to capture a system's true deterministic characteristics. To eliminate this ambiguity, this article proposes the term **"Timely Reaction System (TRS)"**. “实时系统”的用语本身存在名称缺陷，不能反映其准确特征。本文采用**“及时反应系统” (Timely Reaction System, TRS)** 进行取代，以避免理解误解。
@@ -31,13 +33,20 @@ Addressing these pain points, this article introduces an architectural framework
 Most RTOS implementations center on task/process scheduling. In engineering practice, this focus deviates from the ultimate goal: **guaranteeing critical deadline scenarios**. When pushed to the limit, engineers are forced to endlessly tune tasks and interrupts to squeeze out performance, consuming time and compromising reliability. 所有 RTOS 实现均以任务或进程调度为核心，这在工程实践中与“保障关键时限场景”的目标不符。这导致工程师在接近极限的情况下不得不反复优化任务和中断，既耗时又埋下软件可靠性隐患。
 ### **Full Monopoly of Resources for the key scenarios is a must in extream conditions**
 **关键场景在极限情况下必须独占资源**
+
+
 Under extreme conditions, guaranteeing a **Critical Timely Scenario** requires it to preempt and strictly monopolize all necessary hardware resources. Performance can be reclaimed by eliminating three specific overheads: 在极限情况下，要保障**关键时限场景**，该场景必须抢占并独占所有硬件资源。通过消除以下三项开销，可以找回流失的性能：
 1. **Interrupt Overhead (中断开销):** Interrupts can unpredictably hijack resources. By physically masking irrelevant interrupts during a Critical Timely Scenario, the system guarantees absolute resource monopoly. **Crucially, interrupts within the scenario must also be subject to strict frequency control, permitted only when essential to avoid resource waste.** 中断会占用硬件资源。通过屏蔽场景无关的中断，保障**关键时限场景**的资源独占。**同时，场景内的中断也必须进行频率管控，只在必要时允许触发，避免资源浪费。**
 It should be noted that the impact of disabling interrupts (e.g Watchdog) must be taken into account and **properly addressed**. Please also refer to Point 4.
 需要注意的是，关闭关键场景相关的中断(比如看门狗定时器)的**影响需要考虑和对应**，同时请看第4点。
 
 2. **Priority Inversion by Minor Scenarios (次要场景的任务干扰):** Existing theories (like RMS) prioritize tasks with shorter periods, which clashes with scenario-based urgency. Under extreme loads, short-cycle, low-value tasks can cause critical scenarios to miss deadlines. **Scenario-based priority** ensures high-priority scenarios receive ultimate protection during worst-case execution time (WCET). 现有理论（如 RMS）要求执行周期越短优先级越高，这与基于场景的优先级冲突。在极限负载下，短周期但低价值的任务会造成**关键时限场景**失效。通过基于场景的优先级保障，最高优先级场景可获极限护航。
-3. **Scheduling Overhead (调度消耗):** Context switching consumes CPU cycles. By serially executing tasks within a scenario in a deterministic sequence—even if they have varying frequencies—the system completely bypasses internal scheduling overhead. 基于任务的切换本身消耗资源。通过对场景任务进行有序串联（场景内任务可以有不同频率，但在特定时刻进行串行切换），可以节省掉任务调度的资源消耗。
+3. **Scheduling Overhead (调度消耗):** Context switching consumes CPU cycles. 
+- By serially executing tasks within a scenario in a deterministic sequence(Tasks within a real-time scenario should be serial; essentially, they can be merged into a single execution flow. The reason we decompose them into discrete "tasks" is primarily to facilitate the sharing and reuse of these functional units across different scenarios.), the system completely bypasses internal scheduling overhead. 基于任务的切换本身消耗资源。通过对场景任务进行有序串联（实时场景的任务应当是串行的，也就是说是可以合并为一个任务的。分解为任务是方便任务在场景之间的共享），可以节省掉任务调度的资源消耗。
+
+- The scheduling is prefered to be interrupt-triggered, and timed scheduling can be performed with nS or uS precision by triggering timer interrupts. Unlike normal task with normally runs at period over 1ms, deadline critical scenarios can run at period at uS level.
+调度倾向为中断触发，通过定时器中断触发可以在nS或者uS级精度进行定时调度。不同与常规任务的ms级运行周期，时限关键场景的运行周期为uS级。
+
 4. **Use redundancy for Smoothness of minor scnarios 使用性能冗余为次要场景提供平滑保障**
  Once the critical scenario is guaranteed, remaining "Slack Time" can be used for other interrupts. Moreover, communication between these interrupts and minor scenarios must use **flow control or buffering** to absorb the jitter introduced by high-priority preemption. **When redundancy is enough, current RTOS theory can actually also work well. But senario based preemption helps you tune deal also with situations where redundancy is not enough**. 在保障关键场景后，利用剩余时间（Slack Time）允许次要中断执行。同时，中断与次要场景的通信需引入流控或缓冲，以吸收高优先级抢占带来的抖动，且绝不可透支主场景的资源冗余。**在冗余足够的情况下，现有RTOS理论可以很好适应，但是基于场景优先级剥夺思路可以帮助在资源不足时进行调整达到最佳性能**。
 
@@ -48,6 +57,7 @@ It should be noted that the impact of disabling interrupts (e.g Watchdog) must b
 	- Memory isolation is achieved by the **MPU**.通过 MPU 实现内存隔离。
 	- Communication between partitions is **asynchronous**; for **time-critical communication**, data flow is restricted to the **one-way direction from high-priority to low-priority** partitions.分区间采用**异步**通信方式；针对实时响应类通信，数据仅允许从高优先级分区向低优先级分区**单向**流动。
 	- High-priority scenarios may read outputs from low-priority ones, while such communication **shall not trigger time-critical responses** and does not constitute a TRS inverted partition dependency. 高优先级场景可读取低优先级场景的输出，此类通信**不得触发高优场景的及时响应**，因此不构成TRS分区依赖关系倒置。
+	This is a critical concept as a critical deadline scenario can rely on non-critical low layer tasks, in this case, the non-critical low layer tasks do not need to be inlucded the the critical deadline scenario as the input does not trigger time-critical response.这是一个关键概念，因为高优场景可以依赖于非时限宽松的底层任务，在这种情况下，时限宽松底层任务不需要包含在高优先场景中, 因为输入不触发高优先场景的及时响应。
 	- All partitions **run independently, and in case of memory access conflicts, **only the affected single partition needs to be restarted**. 各分区独立运行，若发生内存访问冲突，仅重启受影响的单个分区即可.
 - **Fast Automatic Recovery (快速自动恢复):** The system must possess lightning-fast recovery capabilities, ensuring that any fault recovery never disrupts a Critical Timely Scenario. This "seamless self-healing" requires native recovery mechanisms and **Default-Value Fallback** for cross-scenario messaging. 系统应具备极速自愈能力，确保故障恢复过程不会延误**关键时限场景**。底层架构必须提供原生的自动恢复机制与默认值回退能力。
 - **Message Record & Replay Mechanism (消息记录与重放)**: The architecture should support efficient inter-scenario message recording. When intermittent bugs occur, developers can inject historical message streams to precisely replay the failure, instantly reproducing the "crime scene" for rapid resolution. 架构应支持高效的跨场景消息记录与重放。一旦出现偶发 Bug，可通过注入历史消息流精确重放，瞬间还原“案发现场”以快速除错。
@@ -63,3 +73,6 @@ If software optimization hits a physical ceiling, system-level hardware adjustme
 
 Finally, it should be clarified that most scenarios are not core Timely Reaction System (TRS) scenarios, such as those requiring second-level response. When hardware performance meets their worst-case execution requirements, there is no need for TRS rigid design, and scheduling can be more flexible (as long as it does not interfere with core TRS resources).
 最后需明确，绝大多数场景不属于核心及时响应场景（TRS），如秒级响应需求场景。当硬件性能覆盖其最坏工况执行需求时，无需按TRS强规设计，调度可更灵活（不干扰核心TRS资源即可）。
+
+
+----
