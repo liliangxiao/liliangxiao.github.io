@@ -36,9 +36,9 @@ While existing theories can implement basic real-time features under rich resour
 
 ### **The GAP between General-Purpose RTOS Design and Engineering Practice**
 **通用 RTOS 设计与工程实践的错位**
-Most RTOS implementations center on task/process scheduling. In engineering practice, this focus deviates from the ultimate goal: **guaranteeing Critical TRS Scenarios**. When pushed to the limit, engineers are forced to endlessly tune tasks and interrupts to squeeze out performance, consuming time and compromising reliability. 所有 RTOS 实现均以任务或进程调度为核心，这在工程实践中与“保障 TRS 关键场景”的目标不符。这导致工程师在接近极限的情况下不得不反复优化任务和中断，既耗时又埋下软件可靠性隐患。
+Most RTOS implementations center on task/process scheduling. In engineering practice, this focus deviates from the ultimate goal: **guaranteeing Critical TRS Scenarios(Resource constraints critical scenarios, sheduling based on scenario priorities.)**. When pushed to the limit, engineers are forced to endlessly tune tasks and interrupts to squeeze out performance, consuming time and compromising reliability. 所有 RTOS 实现均以任务或进程调度为核心，这在工程实践中与“保障 TRS 关键场景（资源受限的关键限时场景，按场景优先级进行保障）”的目标不符。这导致工程师在接近极限的情况下不得不反复优化任务和中断，既耗时又埋下软件可靠性隐患。
 
-### **Absolute Resource Sequestration for Critical TRS Scenarios**
+### **Absolute Resource Monoply for Critical TRS Scenarios**
 **TRS 关键场景在极限情况下必须独占资源**
 Under extreme conditions, guaranteeing a **Critical TRS Scenario** requires it to preempt and strictly monopolize all necessary hardware resources. Performance can be reclaimed by eliminating three specific overheads: 在极限情况下，要保障**TRS 关键场景**，该场景必须抢占并独占所有硬件资源。通过消除以下三项开销，可以找回流失的性能：
 
