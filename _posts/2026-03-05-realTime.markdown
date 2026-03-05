@@ -10,7 +10,16 @@ tags:  [01_Software]
 ### **Terminology Flaw (用语的偏差):**
 The term "Real-Time System" is inherently misleading as it fails to capture a system's true deterministic characteristics. To eliminate this ambiguity, this article proposes the term **"Timely Reaction System (TRS)"**. “实时系统”的用语本身存在名称缺陷，不能反映其准确特征。本文采用**“及时反应系统” (Timely Reaction System, TRS)** 进行取代，以避免理解误解。
 ### **Fundamental Flaws in Existing Theories (现有的实时理论根基缺陷):**
-The prevailing theoretical foundation relies on Rate Monotonic Scheduling (RMS) and priority-based task preemption. This approach suffers from an inherent defect: it is not fundamentally driven by the timely reaction to physical scenarios. While it can implement real-time features, **its disconnect from actual operational scenarios degrades timeliness, causing systems to falter under extreme edge cases and forcing engineers into reactive optimization cycles**. 最普遍采用的理论（如 RMS 和基于优先级的任务抢占）存在天生缺陷，即它不是以场景的及时反应为目标的。**虽然其可以用来实现实时功能，但是与场景的脱节造成及时性能的低下，导致在极限工况下力不从心，并带来大量的被动优化工作量**。
+
+The prevailing theoretical foundation relies on Rate Monotonic Scheduling (RMS) or Deadline Monotonic Scheduling (DMS) and priority-based task preemption. This approach suffers from inherent defects when facing real-world engineering limits:
+
+最普遍采用的理论（如 RMS 或 DMS 和基于优先级的任务抢占）在面对真实的工程极限时，存在天生的缺陷：
+
+- **The Illusion of Abundant Resources (算力充足的伪命题):** RMS and DMS are essentially determinism-guarantee theories built on the false assumption of abundant computational resources. However, constrained by SWaP-C (Size, Weight, Power, and Cost) and high-frequency physical requirements, hard real-time systems inherently operate on the edge of resource scarcity. These theories lack degradation mechanisms and cannot adequately handle situations with constrained or exhausted resources. 传统理论本质上是基于“算力资源充足”前提的确定性时间保障理论。然而，受限于 SWaP-C（尺寸/功耗/成本）铁律与物理系统内卷的高频响需求，硬实时系统往往天生处于资源紧缺的边界，传统理论根本无法很好地应对瞬时资源紧张或过载的情况。
+    
+- **Confusing Urgency with Criticality (混淆“紧迫性”与“重要性”):** Under extreme conditions (resource exhaustion), these scheduling algorithms blindly prioritize tasks based on mathematical metrics (shortest period or deadline) rather than the actual physical consequences of failure. They fail to differentiate between "urgent but trivial" and "critical and fatal." 在极限工况（资源枯竭）下，现有调度算法盲目依据数学周期或时限进行调度，无法区分“紧急但不重要”和“核心且致命”的场景。
+    
+While existing theories can implement basic real-time features under rich resources, **this fundamental disconnect from actual operational scenario values degrades timeliness, often sacrificing high-value core scenarios to schedule trivial tasks. This causes systems to falter under extreme edge cases and forces engineers into endless, reactive optimization cycles.** 虽然现有理论在算力充沛时能实现实时功能，但**这种与实际物理场景价值的脱节，常常导致过载时产生“保芝麻丢西瓜”的反向调度。这使得系统在极限工况下力不从心，并给固件工程师带来海量的被动优化工作量。**
 ### **Blind Spots in Current Methodology (现有实时设计方法盲区):**
 Conventional real-time design predominantly focuses on the software layer, neglecting holistic system attributes. This narrow scope prevents firmware engineers from fully grasping the underlying system architecture. 现有实时设计方法往往仅关注软件层面，忽略了实时设计的系统属性，导致固件工程师难以全面掌握系统底层架构。
 Addressing these pain points, this article introduces an architectural framework based on **Scenario-Level Absolute Priority Preemption**. It aims to inspire the design of TRS while providing actionable diagnostic clues for current hard real-time development. 本文针对现存痛点，提供一套基于**场景级别的绝对优先级抢占**的系统设计思路。一方面为 TRS 的设计提供思路，一方面为当前硬实时系统的开发提供问题解决线索。
@@ -24,10 +33,13 @@ Most RTOS implementations center on task/process scheduling. In engineering prac
 **关键场景在极限情况下必须独占资源**
 Under extreme conditions, guaranteeing a **Critical Timely Scenario** requires it to preempt and strictly monopolize all necessary hardware resources. Performance can be reclaimed by eliminating three specific overheads: 在极限情况下，要保障**关键时限场景**，该场景必须抢占并独占所有硬件资源。通过消除以下三项开销，可以找回流失的性能：
 1. **Interrupt Overhead (中断开销):** Interrupts can unpredictably hijack resources. By physically masking irrelevant interrupts during a Critical Timely Scenario, the system guarantees absolute resource monopoly. **Crucially, interrupts within the scenario must also be subject to strict frequency control, permitted only when essential to avoid resource waste.** 中断会占用硬件资源。通过屏蔽场景无关的中断，保障**关键时限场景**的资源独占。**同时，场景内的中断也必须进行频率管控，只在必要时允许触发，避免资源浪费。**
+It should be noted that the impact of disabling interrupts (e.g Watchdog) must be taken into account and **properly addressed**. Please also refer to Point 4.
+需要注意的是，关闭关键场景相关的中断(比如看门狗定时器)的**影响需要考虑和对应**，同时请看第4点。
+
 2. **Priority Inversion by Minor Scenarios (次要场景的任务干扰):** Existing theories (like RMS) prioritize tasks with shorter periods, which clashes with scenario-based urgency. Under extreme loads, short-cycle, low-value tasks can cause critical scenarios to miss deadlines. **Scenario-based priority** ensures high-priority scenarios receive ultimate protection during worst-case execution time (WCET). 现有理论（如 RMS）要求执行周期越短优先级越高，这与基于场景的优先级冲突。在极限负载下，短周期但低价值的任务会造成**关键时限场景**失效。通过基于场景的优先级保障，最高优先级场景可获极限护航。
 3. **Scheduling Overhead (调度消耗):** Context switching consumes CPU cycles. By serially executing tasks within a scenario in a deterministic sequence—even if they have varying frequencies—the system completely bypasses internal scheduling overhead. 基于任务的切换本身消耗资源。通过对场景任务进行有序串联（场景内任务可以有不同频率，但在特定时刻进行串行切换），可以节省掉任务调度的资源消耗。
-**Use redundancy for Smoothness of minor scnarios 使用性能冗余为将要场景提供平滑保障**
- Once the critical scenario is guaranteed, remaining "Slack Time" can be used for other interrupts. However, communication between these interrupts and minor scenarios must use **flow control or buffering** to absorb the jitter introduced by high-priority preemption. When redundancy is enough, current RTOS theory can actually also work well. But senario based preemption helps you tune for the best performance. 在保障关键场景后，利用剩余时间（Slack Time）允许次要中断执行。同时，中断与次要场景的通信需引入流控或缓冲，以吸收高优先级抢占带来的抖动，且绝不可透支主场景的资源冗余。在冗余足够的情况下，现有RTOS理论可以很好适应，但是基于场景优先级剥夺可以帮助达到最佳性能。
+4. **Use redundancy for Smoothness of minor scnarios 使用性能冗余为次要场景提供平滑保障**
+ Once the critical scenario is guaranteed, remaining "Slack Time" can be used for other interrupts. Moreover, communication between these interrupts and minor scenarios must use **flow control or buffering** to absorb the jitter introduced by high-priority preemption. **When redundancy is enough, current RTOS theory can actually also work well. But senario based preemption helps you tune deal also with situations where redundancy is not enough**. 在保障关键场景后，利用剩余时间（Slack Time）允许次要中断执行。同时，中断与次要场景的通信需引入流控或缓冲，以吸收高优先级抢占带来的抖动，且绝不可透支主场景的资源冗余。**在冗余足够的情况下，现有RTOS理论可以很好适应，但是基于场景优先级剥夺思路可以帮助在资源不足时进行调整达到最佳性能**。
 
 ## II. Architecture-Level Reliability Guarantee
 **二、 架构级的可靠性保障**
