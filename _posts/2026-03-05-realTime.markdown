@@ -9,7 +9,7 @@ tags:  [01_Software]
 # Pain Points and Countermeasures in Hard Real-Time Firmware Design 固件硬实时设计的痛点与对策
 
 **This article focuses on optimizing key scenarios under resource constraints, and does not completely replace or overturn existing real-time system designs. For non-critical or resource-rich scenarios, we still use the traditional task-based theory. If we need to calculate the latest execution time, we need to consider the impact of critical scenarios on the latest execution time.  
-本文只针对资源紧张情况下的关键场景进行优化，不是完全取代颠覆现有实时系统设计。对于非关键且性能资源紧张的场景，我们仍然使用基于任务的传统理论，如果需要计算最晚执行时间，需要考虑关键场景对最迟运行时间的影响。**
+本文只针对资源紧张情况下的关键场景进行优化，不是完全取代颠覆现有实时系统设计。对于非关键和性能资源宽松的场景，我们仍然使用基于任务的传统理论，如果需要计算最晚执行时间，需要考虑关键场景对最迟运行时间的影响。**
 
 ---
 
