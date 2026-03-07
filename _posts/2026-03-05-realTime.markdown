@@ -4,55 +4,62 @@ title: "Pain Points and Countermeasures in Hard Real-Time Firmware Design 固件
 date: 2026-03-04 09:32:20 +0400
 description: ...
 tags:  [01_Software]
---- 
-# Pain Points and Countermeasures in Hard Real-Time Firmware Design under Resource Constraints
-**资源受限下固件硬实时设计的痛点与对策**
-
-## Abstract (摘要)
-This article proposes the Punctual Reaction System (PRS) architecture as an engineering-oriented complement to traditional task-based scheduling. Rather than replacing existing real-time theories, PRS introduces a scenario-based layer that manages critical performance bottlenecks. This approach provides a practical framework for ensuring deterministic execution of high-value scenarios while maintaining compatibility with standard Rate Monotonic Scheduling (RMS) frameworks.
-本文提出“准时反应系统 (PRS)”架构，作为对传统基于任务调度理论的工程化补充。PRS 并不取代现有实时理论，而是引入一个基于场景的层级，专项管理核心性能瓶颈。该架构在维持经典 RMS 任务调度框架兼容性的前提下，为关键场景的确定性执行提供了工程化实现路径。
-
+math: true
 ---
 
-## 1. Introduction (引言)
-According to Stankovic (1988) [1], the correctness of a real-time system depends not only on the logical result but also on the time at which the result is produced. In practice, traditional scheduling theories (RMS/DMS) [2] effectively manage general-purpose task concurrency. However, when systems operate near hardware limits, these theories often face determinism challenges due to the gap between mathematical abstraction and physical engineering constraints. To bridge this gap, PRS is proposed not as an alternative, but as a scenario-based enhancement for critical physical contracts.
-根据 Stankovic (1988) 的定义，实时系统的正确性依赖于逻辑结果与产出时刻 [1]。传统调度理论（RMS/DMS）[2] 能够有效管理通用任务并发，但在资源极限工况下，数学模型与物理约束之间的鸿沟常导致确定性挑战。因此，本文提出的 PRS 并非对传统理论的否定，而是作为一种针对关键物理契约的“场景化增强机制”。
+# Scenario-Based RTOS Optimization (SBRO): An Engineering-Oriented Enhancement for Hard Real-Time Firmware
 
----
+**Author:** Liangxiao Li
 
-## 2. Engineering Context: Complementing Traditional Theory (工程背景：对传统理论的补充)
-Traditional scheduling is highly effective for stable, resource-rich environments. The PRS approach complements this by specifically addressing "Critical PRS Scenarios"—tasks that demand absolute punctuality under resource scarcity [3]. It acknowledges that while RMS handles the majority of system tasks, critical physical loops require a distinct management layer to guarantee Worst-Case Execution Time (WCET) without redesigning the underlying system.
-传统调度在资源充沛的稳定环境中表现优异。PRS 通过专项应对“PRS 关键场景”——即资源紧缺下必须保障准时的任务——来补充这一架构 [3]。PRS 承认 RMS 负责系统绝大多数任务，但对于核心物理控制回路，需要一个独特的管理层，在不重构底层系统的前提下保障最坏执行时间 (WCET)。
+### Abstract
 
----
+This article proposes the Scenario-Based RTOS Optimization (SBRO) architecture as an engineering-oriented complement to traditional task-based scheduling. Rather than replacing existing real-time theories, SBRO introduces a scenario-aware layer that dynamically clusters and prioritizes related tasks to manage critical performance bottlenecks. This approach provides a practical framework for ensuring the deterministic execution of high-value physical scenarios under resource scarcity, while maintaining formal mathematical compatibility with standard Rate Monotonic Scheduling (RMS) frameworks.
 
-## 3. Methodology: Scenario-Based Implementation (方法论：基于场景的工程实现)
-PRS integrates with existing systems via a Scenario-Based Layer that activates only when critical conditions are met:
-PRS 通过一个仅在特定关键条件触发时激活的“场景层”与现有系统集成：
+### 1. Introduction
 
-1. **Same-Frequency Task Clustering (场景内同频聚类):** To maintain system integrity, tasks within a PRS scenario must share identical frequencies, ensuring the scenario operates as a unified, deterministic control loop. 为保持系统完整性，PRS 场景内的任务必须具备完全一致的频率，确保场景以统一的确定性控制回路运行。
-2. **Unified Highest Priority & Sequential Execution (优先级统领与顺序执行):** Upon activation, scenario tasks are unified to the highest system priority. They are serialized to bypass context-switching overhead, effectively transforming the scenario into a high-performance "single-stream" process. 场景激活后，内部任务被统领至最高优先级，并按固定顺序串行（单流化），绕过上下文切换开销，形成高性能的单一逻辑流。
-3. **Interrupt Masking for Jitter Control (中断屏蔽与抖动抑制):** PRS applies selective interrupt masking to eliminate external sources of execution jitter, converting random delay into a predictable system bias. PRS 配合选择性中断屏蔽机制，抑制外部执行抖动，将随机延迟转化为可预期的系统偏置。
+According to Stankovic (1988), the correctness of a real-time system depends not only on the logical result but also on the time at which the result is produced. Traditional scheduling theories, such as RMS and Deadline Monotonic Scheduling (DMS) (Liu & Layland, 1973), effectively manage concurrency by treating tasks as independent entities. However, under extreme resource constraints, this mathematical abstraction often diverges from physical engineering requirements, leading to unacceptable jitter.
 
----
+To bridge this gap, we propose the Scenario-Based RTOS Optimization (SBRO) framework. SBRO shifts the scheduling paradigm from managing isolated tasks to managing unified "scenarios"—clusters of interdependent tasks that must execute as a single deterministic block to fulfill critical physical contracts.
 
-## 4. Architecture & Reliability (架构与可靠性)
-PRS ensures integration with standard RTOS designs:
-PRS 通过以下设计与标准 RTOS 设计无缝对接：
+### 2. The Engineering Context of SBRO
 
-- **Scenario-Based MPU Isolation:** Using MPU to partition scenario memory from background tasks without disrupting standard RTOS operations. 使用 MPU 将场景内存与后台任务分区，不干扰标准 RTOS 运作。
-- **One-way Control Flow:** To prevent priority inversion, data flow is restricted from High-Priority scenarios to Low-Priority background tasks, maintaining system stability. 为防止优先级反转，数据仅允许从高优先级场景流向后台任务，保障系统整体稳定性。
-- **Fast Automatic Recovery:** Recovery mechanisms are designed to be non-intrusive, ensuring that fault handling does not affect the deterministic timing of ongoing critical scenarios. 故障恢复机制被设计为非侵入式，确保故障处理不会干扰 PRS 关键场景的确定性时序。
+Traditional RTOS extensions often bypass the scheduler entirely, violating system modularity and risking priority inversion. SBRO complements traditional scheduling by specifically addressing "Critical Scenarios"—situations demanding deeply optimized execution without destroying the underlying RTOS structure.
 
----
+While Mixed-Criticality Systems (MCS) (Vestal, 2007) manage resource scarcity by dynamically dropping lower-criticality tasks under pessimistic execution conditions, SBRO takes a different structural approach. Rather than relying on dynamic preemption, SBRO bypasses context-switching overhead entirely by clustering critical tasks into an atomic, interrupt-masked sequential block. SBRO acknowledges that while an RTOS effectively manages the majority of background system tasks, critical physical control loops require a distinct management layer that recognizes the *context* of the tasks to guarantee Worst-Case Execution Time (WCET).
 
-## 5. Conclusion (总结)
-In summary, PRS provides a practical engineering enhancement to traditional real-time scheduling. By introducing a scenario-aware layer, it enables systems to handle performance bottlenecks and resource constraints while retaining the flexibility of established RTOS models. It does not replace traditional theory; instead, it provides the deterministic safeguard required for core physical operations, ensuring that the most critical system contracts are fulfilled even under the most demanding conditions.
-综上所述，PRS 为传统实时调度提供了一种实用的工程化增强方案。通过引入场景感知层，系统既能保留传统 RTOS 的灵活性，又能有效应对性能瓶颈与资源约束。PRS 并不取代传统理论，而是为核心物理操作提供了确定性保障，确保在极度苛刻的工况下，最关键的系统契约依然能够完美履约。
+### 3. The SBRO Methodology
 
----
+The SBRO framework integrates with existing systems via a Scenario-Based Layer that activates only when predefined physical or temporal conditions are met. The optimization relies on three core mechanisms:
 
-## References (参考文献)
+* **Same-Frequency Task Clustering:** Tasks within a defined SBRO scenario must share identical execution frequencies. This ensures the scenario operates as a unified, deterministic control loop rather than a loose collection of threads.
+* **Unified Priority & Sequential Execution:** Upon scenario activation, clustered tasks are elevated to the highest system priority and executed sequentially. This structurally bypasses intra-scenario context-switching overhead.
+* **Interrupt Masking for Jitter Control:** To eliminate external execution jitter during a critical scenario, SBRO applies selective interrupt masking. This converts random preemptive delays into a predictable, mathematically bounded system bias.
+
+### 4. Architecture and Reliability
+
+To ensure safe integration with standard RTOS designs, the SBRO architecture mandates strict operational boundaries:
+
+* **Pre-emptive MPU Isolation:** Memory boundaries between scenarios and background tasks are enforced via a Memory Protection Unit (MPU). To prevent MPU reconfiguration from adding overhead *during* the critical loop, boundary configurations are loaded pre-emptively during the scenario's initialization phase.
+* **Asynchronous Communication:** Data and control signals may flow bidirectionally between high-priority SBRO scenarios and low-priority background tasks. However, to definitively prevent priority inversion and preserve WCET, any communication flowing from low-priority tasks up to the high-priority SBRO scenario must be strictly non-blocking. By utilizing lock-free data structures or asynchronous buffers, the critical SBRO layer can poll for necessary background data without ever waiting on a lower-priority process.
+* **Strict Execution Time Bounding (Sub-Millisecond):** Because SBRO relies on temporary interrupt masking, the framework dictates that any critical scenario must have a mathematically proven WCET of strictly less than the RTOS SysTick period (typically < 1ms). By enforcing this sub-millisecond constraint, the SBRO scenario may temporarily delay a scheduler tick, but the pending interrupt is immediately serviced upon exiting the scenario. This guarantees that the RTOS scheduler seamlessly catches up without requiring complex, overhead-heavy state recovery mechanisms.
+
+### 5. Formal Schedulability Impact
+
+Because the SBRO methodology temporarily unifies tasks, elevates priority, and masks interrupts, it introduces a blocking factor to the rest of the system. However, this remains compatible with standard Rate Monotonic Scheduling (RMS) by treating the maximum execution time of an SBRO scenario as a predictable blocking time ($B_i$).
+
+System designers can validate background task schedulability using the extended RMS utilization bound:
+
+$U = \sum_{i=1}^{n} \frac{C_i}{T_i} + \frac{B_i}{T_i} \leq n(2^{1/n}-1)$
+
+Where $C_i$ is the computation time, $T_i$ is the period, and $B_i$ represents the Worst-Case Execution Time of the highest-priority SBRO scenario that can preempt or block task $i$. By bounding the scenario time, SBRO converts unpredictable jitter into a verifiable mathematical constant.
+
+### 6. Conclusion
+
+Scenario-Based RTOS Optimization (SBRO) provides a vital engineering enhancement to traditional real-time scheduling. By introducing a scenario-aware layer, it enables systems to handle extreme performance bottlenecks while retaining the architectural flexibility of established RTOS models. It does not replace traditional theory; instead, it provides the deterministic safeguard required for core physical operations, ensuring that the most critical system contracts are fulfilled even under the most demanding constraints.
+
+### References
 [1] Stankovic, J. A. (1988). *Misconceptions About Real-Time Computing*. IEEE Computer.
+
 [2] Liu, C. L., & Layland, J. W. (1973). *Scheduling Algorithms for Multiprogramming*. JACM.
+
 [3] Vestal, S. (2007). *Preemptive Scheduling of Multi-Criticality Systems*. IEEE RTSS.
