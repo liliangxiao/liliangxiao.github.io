@@ -1,61 +1,52 @@
 ---
 layout: post
-title: "Pain Points and Countermeasures in Hard Real-Time Firmware Design 固件硬实时设计的痛点与对策"
+title: "Scenario-Based RTOS Optimization (SBRO): An Engineering-Oriented Enhancement for Hard Real-Time Firmware"
 date: 2026-03-04 09:32:20 +0400
 description: ...
 tags:  [01_Software]
 math: true
 ---
-
-# Scenario-Based RTOS Optimization (SBRO): An Engineering-Oriented Enhancement for Hard Real-Time Firmware
-
 **Author:** Liangxiao Li
 
 ### Abstract
 
-This article proposes the Scenario-Based RTOS Optimization (SBRO) architecture as an engineering-oriented complement to traditional task-based scheduling. Rather than replacing existing real-time theories, SBRO introduces a scenario-aware layer that dynamically clusters and prioritizes related tasks to manage critical performance bottlenecks. This approach provides a practical framework for ensuring the deterministic execution of high-value physical scenarios under resource scarcity, while maintaining formal mathematical compatibility with standard Rate Monotonic Scheduling (RMS) frameworks.
+This article proposes the Scenario-Based RTOS Optimization (SBRO) architecture as a deterministic complement to traditional task-based scheduling. Rather than replacing existing real-time scheduling theory, SBRO introduces a scenario-aware execution layer that clusters interdependent tasks into atomic, interrupt-masked blocks to mitigate stochastic jitter. This approach provides a practical framework for ensuring the deterministic execution of critical control loops under resource scarcity, while maintaining formal schedulability compatibility with standard Rate Monotonic Scheduling (RMS) frameworks.
 
 ### 1. Introduction
 
-According to Stankovic (1988), the correctness of a real-time system depends not only on the logical result but also on the time at which the result is produced. Traditional scheduling theories, such as RMS and Deadline Monotonic Scheduling (DMS) (Liu & Layland, 1973), effectively manage concurrency by treating tasks as independent entities. However, under extreme resource constraints, this mathematical abstraction often diverges from physical engineering requirements, leading to unacceptable jitter.
-
-To bridge this gap, we propose the Scenario-Based RTOS Optimization (SBRO) framework. SBRO shifts the scheduling paradigm from managing isolated tasks to managing unified "scenarios"—clusters of interdependent tasks that must execute as a single deterministic block to fulfill critical physical contracts.
+In hard real-time systems, correctness is defined by both functional accuracy and temporal determinism (Stankovic, 1988). While traditional scheduling theories, such as RMS and Deadline Monotonic Scheduling (DMS) (Liu & Layland, 1973), efficiently manage concurrency, they often introduce non-deterministic jitter in high-frequency control loops due to context-switching overhead and preemptive scheduling interference.  To bridge the gap between abstract mathematical scheduling and physical hardware requirements, we propose the SBRO framework, which shifts the paradigm from managing isolated tasks to managing unified "scenarios"—clusters of interdependent tasks that execute as a single deterministic block.
 
 ### 2. The Engineering Context of SBRO
 
-Traditional RTOS extensions often bypass the scheduler entirely, violating system modularity and risking priority inversion. SBRO complements traditional scheduling by specifically addressing "Critical Scenarios"—situations demanding deeply optimized execution without destroying the underlying RTOS structure.
-
-While Mixed-Criticality Systems (MCS) (Vestal, 2007) manage resource scarcity by dynamically dropping lower-criticality tasks under pessimistic execution conditions, SBRO takes a different structural approach. Rather than relying on dynamic preemption, SBRO bypasses context-switching overhead entirely by clustering critical tasks into an atomic, interrupt-masked sequential block. SBRO acknowledges that while an RTOS effectively manages the majority of background system tasks, critical physical control loops require a distinct management layer that recognizes the *context* of the tasks to guarantee Worst-Case Execution Time (WCET).
+SBRO addresses the limitations of standard preemptive RTOS kernels in handling high-frequency, jitter-sensitive control loops. Unlike Mixed-Criticality Systems (MCS) (Vestal, 2007), which manage resource scarcity by dynamically dropping low-criticality tasks, SBRO maintains system integrity by preserving the task set while minimizing execution variance. By bypassing the scheduler's preemptive logic during critical windows, SBRO eliminates the context-switching overhead that typically compromises Worst-Case Execution Time (WCET) in resource-constrained environments.
 
 ### 3. The SBRO Methodology
 
-The SBRO framework integrates with existing systems via a Scenario-Based Layer that activates only when predefined physical or temporal conditions are met. The optimization relies on three core mechanisms:
+The SBRO framework integrates with existing RTOS environments through three core mechanisms:
 
-* **Same-Frequency Task Clustering:** Tasks within a defined SBRO scenario must share identical execution frequencies. This ensures the scenario operates as a unified, deterministic control loop rather than a loose collection of threads.
-* **Unified Priority & Sequential Execution:** Upon scenario activation, clustered tasks are elevated to the highest system priority and executed sequentially. This structurally bypasses intra-scenario context-switching overhead.
-* **Interrupt Masking for Jitter Control:** To eliminate external execution jitter during a critical scenario, SBRO applies selective interrupt masking. This converts random preemptive delays into a predictable, mathematically bounded system bias.
+* **Synchronous Task Clustering:** SBRO groups tasks that share identical execution frequencies and functional dependencies. This ensures the clustered scenario operates as a single, unified control loop.
+* **Atomic Sequential Execution:** Upon triggering a scenario, clustered tasks are elevated to a pseudo-highest priority and executed sequentially in an uninterrupted block. This structurally eliminates intra-scenario context-switching latency.
+* **Deterministic Interrupt Control:** To suppress external preemptive jitter, SBRO employs selective interrupt masking during the scenario execution phase, transforming unpredictable hardware-level preemptions into a bounded, deterministic execution delay.
 
 ### 4. Architecture and Reliability
 
-To ensure safe integration with standard RTOS designs, the SBRO architecture mandates strict operational boundaries:
+SBRO mandates strict operational constraints to ensure architectural safety and integration with standard kernels:
 
-* **Pre-emptive MPU Isolation:** Memory boundaries between scenarios and background tasks are enforced via a Memory Protection Unit (MPU). To prevent MPU reconfiguration from adding overhead *during* the critical loop, boundary configurations are loaded pre-emptively during the scenario's initialization phase.
-* **Asynchronous Communication:** Data and control signals may flow bidirectionally between high-priority SBRO scenarios and low-priority background tasks. However, to definitively prevent priority inversion and preserve WCET, any communication flowing from low-priority tasks up to the high-priority SBRO scenario must be strictly non-blocking. By utilizing lock-free data structures or asynchronous buffers, the critical SBRO layer can poll for necessary background data without ever waiting on a lower-priority process.
-* **Strict Execution Time Bounding (Sub-Millisecond):** Because SBRO relies on temporary interrupt masking, the framework dictates that any critical scenario must have a mathematically proven WCET of strictly less than the RTOS SysTick period (typically < 1ms). By enforcing this sub-millisecond constraint, the SBRO scenario may temporarily delay a scheduler tick, but the pending interrupt is immediately serviced upon exiting the scenario. This guarantees that the RTOS scheduler seamlessly catches up without requiring complex, overhead-heavy state recovery mechanisms.
+* **MPU-Enforced Spatial Isolation:** To ensure safety, memory boundaries between scenarios and background tasks are enforced via a Memory Protection Unit (MPU). Boundary configurations are pre-loaded during initialization to eliminate reconfiguration overhead during the critical window.
+* **Non-Blocking Data Exchange:** Communication between high-priority SBRO scenarios and background tasks must utilize lock-free data structures or asynchronous buffers. This preserves WCET by ensuring the scenario never experiences blocking waits for low-priority resource access.
+* **Strict WCET Bounding:** The framework enforces a sub-millisecond execution constraint (WCET $< \text{SysTick Period}$). By limiting the duration of interrupt masking to a fraction of the system tick, the RTOS scheduler maintains system-wide task progression, and pending interrupts are serviced immediately upon scenario completion.
 
 ### 5. Formal Schedulability Impact
 
-Because the SBRO methodology temporarily unifies tasks, elevates priority, and masks interrupts, it introduces a blocking factor to the rest of the system. However, this remains compatible with standard Rate Monotonic Scheduling (RMS) by treating the maximum execution time of an SBRO scenario as a predictable blocking time ($B_i$).
-
-System designers can validate background task schedulability using the extended RMS utilization bound:
+SBRO maintains compatibility with RMS theory by incorporating the scenario execution time as a blocking factor ($B_i$). The system-wide schedulability is validated using the following utilization bound:
 
 $U = \sum_{i=1}^{n} \frac{C_i}{T_i} + \frac{B_i}{T_i} \leq n(2^{1/n}-1)$
 
-Where $C_i$ is the computation time, $T_i$ is the period, and $B_i$ represents the Worst-Case Execution Time of the highest-priority SBRO scenario that can preempt or block task $i$. By bounding the scenario time, SBRO converts unpredictable jitter into a verifiable mathematical constant.
+Where $C_i$ is the computation time, $T_i$ is the period, and $B_i$ represents the Worst-Case Execution Time of the highest-priority SBRO scenario that can block task $i$. By establishing $B_i$ as a mathematically verifiable constant, SBRO replaces stochastic jitter with a predictable, bounded latency, allowing for formal validation within established scheduling frameworks.
 
 ### 6. Conclusion
 
-Scenario-Based RTOS Optimization (SBRO) provides a vital engineering enhancement to traditional real-time scheduling. By introducing a scenario-aware layer, it enables systems to handle extreme performance bottlenecks while retaining the architectural flexibility of established RTOS models. It does not replace traditional theory; instead, it provides the deterministic safeguard required for core physical operations, ensuring that the most critical system contracts are fulfilled even under the most demanding constraints.
+Scenario-Based RTOS Optimization (SBRO) provides a robust engineering enhancement for high-frequency hard real-time firmware. By introducing a context-aware execution layer, it enables systems to handle performance bottlenecks while retaining the flexibility of existing RTOS architectures. SBRO effectively bridges the gap between abstract scheduling theory and physical implementation, ensuring that critical timing contracts are satisfied even under demanding resource constraints.
 
 ### References
 [1] Stankovic, J. A. (1988). *Misconceptions About Real-Time Computing*. IEEE Computer.
