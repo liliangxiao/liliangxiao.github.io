@@ -6,82 +6,91 @@ description: ...
 tags:  [01_Software]
 --- 
 
-# Pain Points and Countermeasures in Hard Real-Time Firmware Design 固件硬实时设计的痛点与对策
+# Pain Points and Countermeasures in Hard Real-Time Firmware Design under Resource Constraints
+**资源受限下固件硬实时设计的痛点与对策**
 
-**This article focuses on optimizing key scenarios under resource constraints, and does not completely replace or overturn existing real-time system designs. For non-critical or resource-rich scenarios, we still use the traditional task-based theory. If we need to calculate the latest execution time, we need to consider the impact of critical scenarios on the latest execution time.  
-本文只针对资源紧张情况下的关键场景进行优化，不是完全取代颠覆现有实时系统设计。对于非关键和性能资源宽松的场景，我们仍然使用基于任务的传统理论，如果需要计算最晚执行时间，需要考虑关键场景对最迟运行时间的影响。**
+## Abstract (摘要)
+This article focuses on optimizing key scenarios under resource constraints, and does not completely replace or overturn existing real-time system designs. For non-critical or resource-rich scenarios, traditional task-based theories are still applicable. However, to calculate the latest execution time under constraints, the impact of critical scenarios must be heavily considered. 
+本文只针对资源紧张情况下的关键场景进行优化，不是完全取代颠覆现有实时系统设计。对于非关键和性能资源宽松的场景，我们仍然使用基于任务的传统理论；但如果需要计算最晚执行时间，需要考虑关键场景对最迟运行时间的影响。
 
 ---
 
-## Practical Dilemmas 实践中的困惑
+## 1. Introduction & Terminology (引言与术语界定)
+
+### **Definition of Real-Time System (实时系统的精确定义):**
+According to the foundational definition by Stankovic (1988) [1], "A real-time system is a system where the correctness of the system depends not only on the logical result of the computation, but also on the time at which the result is produced."
+根据 Stankovic (1988) 的基础定义，一个系统被称为“实时系统”，当且仅当：**它是一个受到时间约束的系统，其系统的正确性不仅依赖于计算的逻辑结果，还依赖于该结果产出的瞬时时刻。**
 
 ### **Terminology Flaw (用语的偏差):**
-The term "Real-Time System" is inherently misleading as it fails to capture a system's true deterministic characteristics. To eliminate this ambiguity, this article proposes the term **"Timely Reaction System (TRS)"**.  
-“实时系统”的用语本身存在名称缺陷，不能反映其准确特征。本文采用**“及时反应系统” (Timely Reaction System, TRS)** 进行取代，以避免理解误解。
+Despite the clear academic definition, the term "Real-Time System" in engineering practice is inherently misleading, as it often fails to capture a system's true deterministic characteristics and is mistakenly equated with "fast processing". To eliminate this ambiguity, this article proposes the term **"Punctual Reaction System (PRS)"**. 
+尽管学术界有明确定义，但“实时系统”的用语在工程实践中本身存在名称缺陷，常被误解为“处理速度快”，不能反映其准确的确定性特征。本文采用**“准时反应系统” (Punctual Reaction System, PRS)** 进行取代，以避免理解误解。
 
-### **Fundamental Flaws in Existing Theories (现有的实时理论根基缺陷):**
-The prevailing theoretical foundation relies on Rate Monotonic Scheduling (RMS) or Deadline Monotonic Scheduling (DMS) and priority-based task preemption. This approach suffers from inherent defects when facing real-world engineering limits:  
+---
+
+## 2. Fundamental Flaws in Existing Theories (现有理论的根基缺陷)
+
+The prevailing theoretical foundation relies on Rate Monotonic Scheduling (RMS) or Deadline Monotonic Scheduling (DMS) and priority-based task preemption [2]. This approach suffers from inherent defects when facing real-world engineering limits: 
 最普遍采用的理论（如 RMS 或 DMS 和基于优先级的任务抢占）在面对真实的工程极限时，存在天生的缺陷：
 
-- **The Illusion of Abundant Resources (算力充足的伪命题):** RMS and DMS are essentially determinism-guarantee theories built on the false assumption of abundant computational resources. However, constrained by SWaP-C and high-frequency physical requirements, hard TRS inherently operates on the edge of resource scarcity. These theories lack degradation mechanisms and cannot adequately handle situations with constrained or exhausted resources. 传统理论本质上是基于“算力资源充足”前提的确定性时间保障理论。然而，受限于 SWaP-C 与物理系统内卷的高频响需求，硬 TRS 往往天生处于资源紧缺的边界，传统理论根本无法很好地应对瞬时资源紧张或过载的情况。
+- **The Illusion of Abundant Resources (算力充足的伪命题):** RMS and DMS are essentially determinism-guarantee theories built on the false assumption of abundant computational resources. However, constrained by SWaP-C and high-frequency physical requirements, hard PRS inherently operates on the edge of resource scarcity. These theories lack degradation mechanisms and cannot adequately handle situations with constrained or exhausted resources. 传统理论本质上是基于“算力资源充足”前提的确定性时间保障理论。然而，受限于 SWaP-C 与物理系统内卷的高频响需求，硬 PRS 往往天生处于资源紧缺的边界，传统理论根本无法很好地应对瞬时资源紧张或过载的情况。
     
-- **Confusing Urgency with Criticality (混淆“紧迫性”与“重要性”):** Under extreme conditions (resource exhaustion), these scheduling algorithms blindly prioritize tasks based on mathematical metrics (shortest period or deadline) rather than the actual physical consequences of failure. They fail to differentiate between "urgent but trivial" and "critical and fatal." 在极限工况（资源枯竭）下，现有调度算法盲目依据数学周期或时限进行调度，无法区分“紧急但不重要”和“核心且致命”的场景。
+- **Confusing Urgency with Criticality (混淆“紧迫性”与“重要性”):** Under extreme conditions (resource exhaustion), these scheduling algorithms blindly prioritize tasks based on mathematical metrics (shortest period or deadline) rather than the actual physical consequences of failure [3]. They fail to differentiate between "urgent but trivial" and "critical and fatal." 在极限工况（资源枯竭）下，现有调度算法盲目依据数学周期或时限进行调度，无法区分“紧急但不重要”和“核心且致命”的场景。
     
-While existing theories can implement basic real-time features under rich resources, **this fundamental disconnect from actual operational scenario values degrades timeliness, often sacrificing high-value Critical 关键 TRS Scenarios to schedule trivial tasks. This causes systems to falter under extreme edge cases and forces engineers into endless, reactive optimization cycles.** 虽然现有理论在算力充沛时能实现实时功能，但**这种与实际物理场景价值的脱节，常常导致过载时产生“保芝麻丢西瓜”的反向调度。这使得系统在极限工况下力不从心，并给固件工程师带来海量的被动优化工作量。**
+While existing theories can implement basic real-time features under rich resources, **this fundamental disconnect from actual operational scenario values degrades timeliness, often sacrificing high-value Critical PRS Scenarios to schedule trivial tasks. This causes systems to falter under extreme edge cases and forces engineers into endless, reactive optimization cycles.** 虽然现有理论在算力充沛时能实现实时功能，但**这种与实际物理场景价值的脱节，常常导致过载时产生“保芝麻丢西瓜”的反向调度。这使得系统在极限工况下力不从心，并给固件工程师带来海量的被动优化工作量。**
 
 ---
 
-## I. From "Task Preemption" to "Full Scenario Preemption"
-**从追求“任务抢占调度”到追求“场景的绝对完全抢占”**
+## 3. Methodology: Core Scenario Optimization (核心方法论：场景优化策略)
 
-### **The GAP between General-Purpose RTOS Design and Engineering Practice**
-**通用 RTOS 设计与工程实践的错位**
-Most RTOS implementations center on task/process scheduling. In engineering practice, this focus deviates from the ultimate goal: **guaranteeing Critical TRS Scenarios(Resource constraints critical scenarios, sheduling based on scenario priorities.)**. When pushed to the limit, engineers are forced to endlessly tune tasks and interrupts to squeeze out performance, consuming time and compromising reliability. 所有 RTOS 实现均以任务或进程调度为核心，这在工程实践中与“保障 TRS 关键场景（资源受限的关键限时场景，按场景优先级进行保障）”的目标不符。这导致工程师在接近极限的情况下不得不反复优化任务和中断，既耗时又埋下软件可靠性隐患。
+### **The GAP between General-Purpose RTOS Design and Engineering Practice (通用 RTOS 设计与工程实践的错位)**
+Most RTOS implementations center on task/process scheduling. In engineering practice, this focus deviates from the ultimate goal: **guaranteeing Critical PRS Scenarios (Resource constraints critical scenarios, scheduling based on scenario priorities.)**. 所有 RTOS 实现均以任务或进程调度为核心，这在工程实践中与“保障 PRS 关键场景（资源受限的关键限时场景，按场景优先级进行保障）”的目标不符。这导致工程师不得不反复优化任务和中断，既耗时又埋下软件隐患。
 
-### **Absolute Resource Monoply for Critical TRS Scenarios**
-**TRS 关键场景在极限情况下必须独占资源**
-Under extreme conditions, guaranteeing a **Critical TRS Scenario** requires it to preempt and strictly monopolize all necessary hardware resources. Performance can be reclaimed by eliminating three specific overheads: 在极限情况下，要保障**TRS 关键场景**，该场景必须抢占并独占所有硬件资源。通过消除以下三项开销，可以找回流失的性能：
+### **Absolute Resource Monopoly and Deterministic Execution (PRS 关键场景在极限情况下的绝对资源独占与确定性执行)**
+To adapt to the real-time performance (latency + error) of core scenarios, the system abandons traditional scheduling and enforces absolute resource monopoly. 核心场景为了适配极致的实时性能（延迟+误差），必须放弃传统调度，采用以下策略实现资源的绝对独占：
 
-1. **Interrupt Overhead (中断开销):** Interrupts can unpredictably hijack resources. 
-- By shielding lower-priority scenario related interrupts (for non-critical tasks) and ensuring the Critical TRS Scenario’s priority, the system guarantees absolute resource monopoly. **Crucially, enabled interrupts must also be subject to strict frequency control, permitted only when essential to avoid resource waste.** 中断会占用硬件资源。通过关闭低优先级的中断，保障**TRS 关键场景**的资源独占。**同时，打开的中断也必须进行频率管控，只在必要时允许触发，避免资源浪费。** 
-- It should be noted that the impact of disabling interrupts (e.g., Watchdog) must be taken into account and **properly addressed**. Please also refer to Point 4.
-需要注意的是，关闭关键场景相关的中断（比如看门狗定时器）的**影响需要考虑和对应**，同时请看第 4 点。
+1. **Same-Frequency Task Clustering (场景内任务的同频聚类):** A critical emergency scenario triggered under specific conditions should not include tasks with different execution frequencies. All tasks within a critical scenario must share the exact same execution frequency to avoid resource waste and timing conflicts. 特定条件下触发的紧急场景不应包括执行频率不同的任务。场景内包含的所有任务，其执行频率和触发条件必须绝对一致。
+2. **Unified Highest Priority & Sequential Execution (统一最高优先级与顺序执行):** All tasks within the core scenario are unified to the system's highest priority. Rather than functioning as independent RTOS threads, they are strictly serialized and executed in a predetermined sequence, completely bypassing internal scheduling overhead. 将核心场景内的任务统一设为系统的最高优先级。这些任务不再参与常规排队，而是按固定顺序严格串行执行（单流化），彻底消除调度切换消耗。
+3. **Interrupt Masking for Error Adjustment (中断屏蔽与误差管控):** By introducing an In-Scenario Interrupt Masking Mechanism, the system dynamically shields non-critical interrupts based on resource constraints during the scenario's execution, eliminating external jitter. 配合场景内中断屏蔽机制，在场景执行期间根据资源紧张情况屏蔽无关硬件中断，消除外部执行误差。*(It should be noted that the impact of disabling interrupts, e.g., Watchdog, must be taken into account and properly addressed. 需注意屏蔽看门狗等中断的影响并妥善处理)*。
+4. **Deterministic Total Execution Time (运行总耗时的绝对确定):** Through unified priority, sequential execution, and interrupt masking, the total execution time from the first line of code to the last within the scenario becomes a fixed, deterministic value. 通过统一优先级、顺序执行和中断屏蔽，整个场景的运行总耗时变成了物理上可精确计算的定值。
 
-2. **Priority Inversion by Non-Critical Scenarios (非关键场景的任务干扰):** Existing theories (like RMS) prioritize tasks with shorter periods, which clashes with scenario-based urgency. Under extreme loads, short-cycle, low-value tasks can cause Critical TRS Scenarios to miss deadlines. **Scenario-based Priority** ensures High-Priority TRS Scenarios receive ultimate protection during Worst-Case Execution Time (WCET). 现有理论（如 RMS）要求执行周期越短优先级越高，这与基于场景的优先级冲突。在极限负载下，短周期但低价值的任务会造成**TRS 关键场景**失效。通过基于场景的优先级保障，最高优先级场景可获极限护航。
 
-3. **Scheduling Overhead (调度消耗):** 
-- **Scenario Serialization (场景单流化):** By serially executing tasks within a scenario in a deterministic sequence (Tasks within a TRS scenario should be serial; essentially, they can be merged into a single execution flow. The reason we decompose them into discrete "tasks" is primarily to facilitate the sharing and reuse of these functional units across different scenarios.), the system completely bypasses internal scheduling overhead. 基于任务的切换本身消耗资源。通过对场景任务进行有序串联（TRS 场景的任务应当是串行的，也就是说是可以合并为一个任务的。分解为任务是方便任务在场景之间的共享），可以节省掉任务调度的资源消耗。
-- The scheduling is preferred to be interrupt-triggered, and timed scheduling can be performed with nS or uS precision by triggering timer interrupts. Unlike normal tasks that normally run at periods over 1ms, deadline Critical TRS Scenarios can run at periods at uS level, or triggered by event/interrupt.  调度倾向为中断触发，通过定时器中断触发可以在 nS 或者 uS 级精度进行定时调度。不同于常规任务的 ms 级运行周期，时限关键 TRS 场景的运行周期为 uS 级或者事件/中断触发。
 
-4. **Use Temporal Margin for Smoothness of Non-Critical Scenarios (使用时间裕量为非关键场景提供平滑保障):** Once the Critical TRS Scenario is guaranteed, remaining **Slack Time (时间裕量)** can be used for other interrupts. Moreover, communication between these interrupts and Non-Critical Scenarios must use **flow control, buffering or drop strategy** to deal with the jitter introduced by high-priority preemption. **When Temporal Margin is enough, current RTOS theory can actually also work well. But Scenario-based Preemption helps you deal also with situations where Temporal Margin is not enough.** 在保障关键场景后，利用剩余时间（时间裕量）允许次要中断执行。同时，中断与非关键场景的通信需引入**流控、缓冲、或丢弃策略**，以处理高优先级抢占带来的抖动，且绝不可透支主场景的资源。**在时间裕量足够的情况下，现有 RTOS 理论可以很好适应，但是基于场景优先级剥夺思路可以帮助在资源不足时进行调整达到最佳性能。**
+**Use Temporal Margin for Smoothness of Non-Critical Scenarios (使用时间裕量为非关键场景提供平滑保障):** Once the Critical PRS Scenario's deterministic execution is guaranteed, remaining **Slack Time (时间裕量)** can be used for other tasks. **When Temporal Margin is rich, current RTOS theory can actually also work well. But Scenario-based Preemption helps you deal also with situations where Temporal Margin is not rich.** 在保障关键场景绝对准时后，利用剩余时间（时间裕量）允许次要任务执行。**在时间裕量富足的情况下，现有 RTOS 理论可以很好适应，但是基于场景的统领优先级思路可以帮助在资源不足时锁定确定性。**
 
 ---
 
-## II. Architecture-Level Reliability Guarantee
-**二、 架构级的可靠性保障**
+## 4. Architecture-Level Reliability Guarantee (架构级的可靠性保障)
 
-- **Scenario-Based Isolation (Module Partitions) 基于场景的隔离 (模块分区):**
+- **Scenario-Based Isolation (基于场景的模块隔离):**
     - **Isolation of software modules is implemented based on Scenarios.** 基于场景进行模块隔离。
     - Memory isolation is achieved by the **MPU**. 通过 MPU 实现内存隔离。
     - Communication between partitions is **asynchronous**; for **time-critical communication**, data flow is restricted to the **One-way Control Direction from High-Priority to Low-Priority** partitions. 分区间采用**异步**通信方式；针对实时响应类通信，数据流向受**控制流单向化**限制（仅允许从高优先级分区向低优先级分区）。
-    - High-priority scenarios may read outputs from low-priority ones, while such communication **shall not trigger time-critical responses** and does not constitute a TRS inverted partition dependency. 高优先级场景可读取低优先级场景的输出，此类通信**不得触发高优场景的及时响应**，因此不构成 TRS 分区依赖关系倒置。  
-    This is a critical concept as a Critical TRS Scenario can rely on non-critical low-layer tasks. In this case, the non-critical low-layer tasks do not need to be included in the Critical TRS Scenario as the input does not trigger time-critical response. 这是一个关键概念，因为高优场景可以依赖于非时限宽松的底层任务，在这种情况下，时限宽松底层任务不需要包含在高优场景中，因为输入不触发高优场景的及时响应。
+    - High-priority scenarios may read outputs from low-priority ones, while such communication **shall not trigger time-critical responses** and does not constitute a PRS inverted partition dependency. 高优先级场景可读取低优先级场景的输出，此类通信**不得触发高优场景的准时响应**，因此不构成 PRS 分区依赖关系倒置。  
+    *Note: This is a critical concept as a Critical PRS Scenario can rely on non-critical low-layer tasks. In this case, the non-critical low-layer tasks do not need to be included in the Critical PRS Scenario as the input does not trigger time-critical response. 这是一个关键概念，因为高优场景可以依赖于非时限宽松的底层任务，在这种情况下，时限宽松底层任务不需要包含在高优场景中。*
     - All partitions **run independently, and in case of memory access conflicts, only the affected single partition needs to be restarted.** 各分区独立运行，若发生内存访问冲突，仅重启受影响的单个分区即可。
 
-- **Fast Automatic Recovery (快速自动恢复):** The system must possess lightning-fast recovery capabilities, ensuring that any fault recovery never disrupts a **Critical TRS Scenario**. This "seamless self-healing" requires native recovery mechanisms and **Default-Value Fallback** for cross-scenario messaging. 系统应具备极速自愈能力，确保故障恢复过程不会延误**TRS 关键场景**。底层架构必须提供原生的自动恢复机制与默认值回退能力。
+- **Fast Automatic Recovery (快速自动恢复):** The system must possess lightning-fast recovery capabilities, ensuring that any fault recovery never disrupts a **Critical PRS Scenario**. This "seamless self-healing" requires native recovery mechanisms and **Default-Value Fallback**. 系统应具备极速自愈能力，确保故障恢复过程不会延误**PRS 关键场景**。底层架构必须提供原生的自动恢复机制与默认值回退能力。
 
-- **Message Record & Replay Mechanism (消息记录与重放):** The architecture should support efficient inter-scenario message recording. When intermittent bugs occur, developers can inject historical message streams to precisely replay the failure, instantly reproducing the "crime scene" for rapid resolution. 架构应支持高效的跨场景消息记录与重放。一旦出现偶发 Bug，可通过注入历史消息流精确重放，瞬间还原“案发现场”以快速除错。
+- **Message Record & Replay Mechanism (消息记录与重放):** The architecture should support efficient inter-scenario message recording. When intermittent bugs occur, developers can precisely replay the failure. 架构应支持高效的跨场景消息记录与重放。一旦出现偶发 Bug，可通过注入历史消息流精确重放，瞬间还原“案发现场”以快速除错。
 
 ---
 
-## III. System-Level Performance Solutions
-**三、 系统级性能解决方案**
+## 5. System-Level Performance Solutions & Conclusion (系统级性能解决方案与结论)
 
 If software optimization hits a physical ceiling, system-level hardware adjustments (**Resource Augmentation**) are required: 如果软件优化后仍无法达标，说明触及了物理天花板，需要进行硬件级别的资源扩充：
 
 - **Hardware Adaptation (硬件适配):** Use dual-core MPUs, DSPs for algorithmic acceleration, or FPGAs/ASICs to overcome bus and computational bottlenecks. 寻找性能瓶颈，利用双核 MPU、DSP 加速算法，或使用 FPGA/ASIC 解决总线瓶颈。
+- **Load Balancing (负载均衡):** In multi-core architectures, **Critical PRS Scenario** loads should be distributed evenly across cores to prevent single-core congestion. 在多核架构下，**PRS 关键场景**的负载应尽量平均分配到每个核上，避免单核拥堵。
 
-- **Load Balancing (负载均衡):** In multi-core architectures, **Critical TRS Scenario** loads should be distributed evenly across cores to prevent single-core congestion. 在多核架构下，**TRS 关键场景**的负载应尽量平均分配到每个核上，避免单核拥堵。
+**Conclusion (总结):** In conclusion, the Punctual Reaction System (PRS) architecture provides a targeted solution for the deterministic failure of traditional scheduling under extreme resource constraints. It shifts the embedded design paradigm from "mathematical-period-driven global fairness" to "physical-criticality-driven absolute monopoly." 
+综上所述，准时反应系统 (PRS) 架构为传统调度在极端资源约束下的确定性失效提供了针对性解法，将固件设计范式从“基于数学周期的全局公平”转向了“基于物理关键性的绝对资源独占”。
 
-Finally, it should be clarified that **most scenarios are NOT Critical TRS Scenarios, such as those requiring milisecond-level or aobve response**. When hardware performance meets their worst-case execution requirements, there is no need for TRS rigid design, and scheduling can be more flexible (as long as it does not interfere with Critical TRS resources).  
-最后需明确，**绝大多数场景不属于核心及时响应场景 (TRS)，如毫秒级以上响应的需求场景**。当硬件性能覆盖其最坏工况执行需求时，无需按 TRS 强规设计，调度可更灵活（不干扰关键 TRS 资源即可）。
+Importantly, PRS acts as a critical multi-layer complement rather than a complete replacement for existing RTOS theories. For conventional scenarios with sufficient temporal margins (e.g., millisecond-level non-critical tasks), traditional task-based scheduling remains the most flexible and efficient choice. However, when a system is forced to operate at its hardware limits, the rigid, scenario-based design of PRS—through priority unification and sequential execution—eliminates unpredictable jitters, serving as the ultimate safeguard for the system's core physical contracts.
+需要强调的是，PRS 是对现有 RTOS 理论的跨维补充，而非全盘替代。对于具备充足时间裕量的常规场景（如毫秒级非关键任务），传统任务调度依然是灵活高效的首选。但是，当系统被推向硬件算力的极限边缘时，PRS 通过优先级统领与单流化执行所建立的强规设计，能彻底消除不可控的调度抖动，作为保障核心物理契约不可逾越的最后防线。
+---
+
+## References (参考文献)
+
+[1] Stankovic, J. A. (1988). *Misconceptions About Real-Time Computing: A Serious Problem for Next-Generation Systems*. IEEE Computer, 21(10), 10-19.
+[2] Liu, C. L., & Layland, J. W. (1973). *Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment*. Journal of the ACM (JACM), 20(1), 46-61.
+[3] Vestal, S. (2007). *Preemptive Scheduling of Multi-Criticality Systems with Varying Degrees of Execution Time Assurance*. IEEE Real-Time Systems Symposium.
