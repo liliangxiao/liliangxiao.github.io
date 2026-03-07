@@ -55,7 +55,7 @@ To adapt to the real-time performance (latency + error) of core scenarios, the s
 
 
 
-**Use Temporal Margin for Smoothness of Non-Critical Scenarios (使用时间裕量为非关键场景提供平滑保障):** Once the Critical PRS Scenario's deterministic execution is guaranteed, remaining **Slack Time (时间裕量)** can be used for other tasks. **When Temporal Margin is rich, current RTOS theory can actually also work well. But Scenario-based Preemption helps you deal also with situations where Temporal Margin is not rich.** 在保障关键场景绝对准时后，利用剩余时间（时间裕量）允许次要任务执行。**在时间裕量富足的情况下，现有 RTOS 理论可以很好适应，但是基于场景的统领优先级思路可以帮助在资源不足时锁定确定性。**
+**Use Temporal Margin for Smoothness of Non-Critical Scenarios (使用时间裕量为非关键场景提供平滑保障):** Once the Critical PRS Scenario's deterministic execution is guaranteed, remaining **Slack Time (时间裕量)** can be used for less important interupts or tasks(Use tradional theory to adjust) for trade-off. **When Temporal Margin is rich, current RTOS theory can actually also work well. But Scenario-based Preemption helps you deal also with situations where Temporal Margin is not rich.** 在保障关键场景绝对准时后，利用剩余时间（时间裕量）允许次要中断和任务执行以进行平衡。**在时间裕量富足的情况下，现有 RTOS 理论可以很好适应，但是基于场景的统领优先级思路可以帮助在资源不足时提供性能优化思路。**
 
 ---
 
